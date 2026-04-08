@@ -23,7 +23,11 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-
+   ability:{
+    type: String,
+    enum:["plumbers", "tutors", "electricians", 
+"delivery agents"]
+   },
     password: {
       type: String,
       default: null,
