@@ -64,6 +64,18 @@ const Register = () => {
       !form.phoneNumber.trim()
     )
       return "For workers, add ability or price range or phone number";
+
+    if (!form.dateOfBirth) return "Date of Birth is required";
+    const today = new Date();
+    const birthDate = new Date(form.dateOfBirth);
+    if (birthDate > today) return "Date of Birth cannot be in the future.";
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    if (age < 14) return "You must be at least 14 years old to register.";
+
     return "";
   };
 
