@@ -136,3 +136,123 @@ export const Verification = async (req, res) => {
     return response(res, 500, "Internal server error", null, error.message);
   }
 };
+export const reVerificationMail = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return response(res, 400, "Email is required");
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase() });
+
+    if (!user) {
+      return response(res, 404, "User not found");
+    }
+
+    if (user.isVerified) {
+      return response(res, 400, "User already verified. Please login.");
+    }
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "15m",
+    });
+
+    user.token = token;
+    await user.save();
+
+    await emailVerify(token, user.email);
+
+    return response(res, 200, "Verification email sent successfully");
+  } catch (error) {
+    console.error("Re-verification error:", error.message);
+    return response(res, 500, "Internal server error", null, error.message);
+  }
+};
+export const login = async (req, res) => {
+  try {
+    const { customId, email, password } = req.body;
+
+    if ((!email && !customId) || !password) {
+      return response(res, 400, "Required fields are missing");
+    }
+
+    const normalizedEmail = email ? email.toLowerCase() : null;
+    const normalizedId = customId ? customId.toLowerCase() : null;
+
+    const existingUser = await User.findOne({
+      $or: [{ email: normalizedEmail }, { customId: normalizedId }].filter(
+        Boolean,
+      ),
+    }).select("+password")
+    
+
+    if (!existingUser) {
+      return response(res, 400, "User not found");
+    }
+    if (!existingUser.isVerified) {
+      return response(res, 400, "User not Verified");
+    }
+    const matchPassword = await bcryptjs.compare(
+      password,
+      existingUser.password,
+    );
+
+    if (!matchPassword) {
+      return response(res, 400, "Invalid email or password");
+    }
+
+    const accessToken = generateToken(existingUser);
+    const user = await User.findOneAndUpdate(
+      { _id: existingUser._id },
+      { $set: { isLoggedIn: true } },
+      { 
+        returnDocument: "after",
+        runValidators: true 
+      }
+    )
+ 
+   
+    res.cookie("auth_token", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 15 * 24 * 60 * 60 * 1000,
+    });
+   
+
+    return response(res, 200, `Welcome Mr ${user.username}`, {
+      userId: user._id,
+      username: user.username,
+      customId: user.customId,
+      email: user.email,
+      profilePicture: user.profilePicture,
+      bio: user.bio,
+      phoneNumber: user.phoneNumber,
+      gender: user.gender,
+      dateOfBirth: user.dateOfBirth,
+      accessToken: accessToken,
+    });
+  } catch (error) {
+    console.log(error);
+    return response(res, 500, "Internal server error", null, error.message);
+  }
+};
+export const logout = async (req, res) => {
+  try {
+    if (req.user) {
+      await User.findByIdAndUpdate(req.user._id, { isLoggedIn: false });
+    }
+
+    res.clearCookie("auth_token", {
+      httpOnly: true,
+ secure: true,
+      sameSite: "none",
+    });
+
+    return response(res, 200, "Logout Successfully and status updated in DB");
+  } catch (error) {
+    console.log(error);
+    return response(res, 500, "Internal server error");
+  }
+};
