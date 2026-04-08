@@ -2,6 +2,10 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './App.css';
 import Navbar from "./pages/navbar";
 import Register from "./auth/resgister";
+import Verify from "./auth/verify";
+import Login from "./auth/login";
+import VerifyPage from "./auth/verify_1";
+import VerifyPage_1 from "./auth/verify_1";
 
 
 function App() {
@@ -14,6 +18,16 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+      
+    },
+    {
+      path: "/verify/:token",
+      element: <VerifyPage_1 />,
+      
+    },
+    {
+      path: "/login",
+      element: <Login />,
       
     },
   ]);

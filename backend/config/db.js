@@ -4,11 +4,20 @@ const connectDB = async () => {
   if (mongoose.connection.readyState === 1) return;
 
   const connectionPaths = [
-    { name: "Atlas Default", uri: process.env.MONGO_URI_ATLAS_DEFAULT, checkPrimary: false },
+    {
+      name: "Atlas Default",
+      uri: process.env.MONGO_URI_ATLAS_DEFAULT,
+      checkPrimary: false,
+    },
     { name: "Atlas SRV", uri: process.env.MONGO_URI_SRV, checkPrimary: false },
     { name: "Direct Shard 00", uri: process.env.SHARD_00, checkPrimary: true },
     { name: "Direct Shard 01", uri: process.env.SHARD_01, checkPrimary: true },
-    { name: "Direct Shard 02", uri: process.env.SHARD_02, checkPrimary: true }
+    { name: "Direct Shard 02", uri: process.env.SHARD_02, checkPrimary: true },
+    {
+      name: "Local MongoDB",
+      uri: process.env.MONGO_URI_LOCAL || "mongodb://127.0.0.1:27017/kalpathon",
+      checkPrimary: false,
+    },
   ];
 
   for (const conn of connectionPaths) {
@@ -16,31 +25,37 @@ const connectDB = async () => {
 
     try {
       console.log(`⏳ Testing: ${conn.name}...`);
-      
-      await mongoose.connect(conn.uri, { 
-        serverSelectionTimeoutMS: 5000, 
-        family: 4 
+
+      await mongoose.connect(conn.uri, {
+        serverSelectionTimeoutMS: 5000,
+        family: 4,
       });
 
-     
       if (conn.checkPrimary) {
-        const isMasterDoc = await mongoose.connection.db.admin().command({ isMaster: 1 });
-        
+        const isMasterDoc = await mongoose.connection.db
+          .admin()
+          .command({ isMaster: 1 });
+
         if (!isMasterDoc.ismaster) {
-          console.log(`ℹ️ ${conn.name} is Secondary (Read-Only). Skipping to next...`);
+          console.log(
+            `ℹ️ ${conn.name} is Secondary (Read-Only). Skipping to next...`,
+          );
           await mongoose.disconnect();
-          continue; 
+          continue;
         }
       }
 
       console.log(`✅ SUCCESS! Connected to PRIMARY via: ${conn.name}`);
-      return; 
+      return;
     } catch (err) {
       console.log(`❌ ${conn.name} failed: ${err.message}`);
     }
   }
 
   console.error("💥 SYSTEM FAILURE: No writable connection found!");
+  console.error(
+    "Set one of these in backend/.env: MONGO_URI_ATLAS_DEFAULT, MONGO_URI_SRV, or run local MongoDB on mongodb://127.0.0.1:27017",
+  );
   process.exit(1);
 };
 
