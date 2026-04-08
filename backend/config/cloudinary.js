@@ -14,7 +14,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: async (req, file) => {
     return {
-      folder: "hotdrops_images",
+      folder: "WorkerService_images",
       resource_type: "image", 
       allowed_formats: ["jpg", "png", "jpeg", "webp"],
       transformation: [

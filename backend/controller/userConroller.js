@@ -117,17 +117,9 @@ console.log("🔥updated")
 };
 export const getMe = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).populate("followers", "username customId profilePicture")
-      .populate("following", "username customId profilePicture")
-      .populate({
-        path: "posts",
-        options: { sort: { createdAt: -1 } }, 
-        populate: [{
-          path: "comments.user", 
-          select: "customId profilePicture"
-        },{ path: "likes", select: "customId profilePicture" }]
-      });
-    
+    const user = await User.findById(req.user._id).select("-password");
+      
+     
 
     if (!user) {
       return response(res, 404, "User not found");
