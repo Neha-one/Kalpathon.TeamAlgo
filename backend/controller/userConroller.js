@@ -12,4 +12,22 @@ export const getAllUser = async (req, res) => {
         return response(res, 500, "Server error", null, error.message);
     }
 };
-
+export const checkAuth = async (req, res) => {
+  const userId = req.user?._id;
+  try {
+    if (!userId) {
+      return response(
+        res,
+        401,
+        "Unauthorized ! Please login to access HotDrop",
+      );
+    }
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return response(res, 404, "User not found with this session");
+    }
+    return response(res, 200, "User authenticated successfully", { user });
+  } catch (error) {
+    return response(res, 500, "Server error", null, error.message);
+  }
+};

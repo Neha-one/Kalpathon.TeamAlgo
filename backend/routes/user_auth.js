@@ -1,10 +1,11 @@
 import express from "express";
 import { protect } from "../middleware/protect.js";
-import { getAllUser } from "../controller/userConroller.js";
+import { checkAuth, getAllUser } from "../controller/userConroller.js";
 const router = express.Router();
 
 
 router.get('/getallUser', getAllUser);
+router.get("/checkauth", protect, checkAuth);
 // router.get('/verification/:token', Verification)
 // router.post('/reverificationmail', reVerificationMail)
 // router.post('/login', login)
