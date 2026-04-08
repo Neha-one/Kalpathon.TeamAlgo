@@ -4,7 +4,7 @@ import Navbar from "./pages/navbar";
 import Register from "./auth/resgister";
 
 import Login from "./auth/login";
-import VerifyPage from "./auth/verify_1";
+import VerifyPage from "./auth/verify";
 import VerifyPage_1 from "./auth/verify_1";
 
 
