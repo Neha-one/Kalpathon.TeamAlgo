@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Mail, Lock, User } from "lucide-react";
-import API from "../api/Api";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [useEmail, setUseEmail] = useState(true); // toggle login type
+  const login = useAuthStore((state) => state.login);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -37,16 +38,19 @@ const Login = () => {
         ...(useEmail ? { email: form.email } : { customId: form.customId }),
       };
 
-      const res = await API.post("/auth/login", payload);
+      const result = await login(payload);
 
-      console.log("✅ Login Success:", res.data);
+      if (!result.ok) {
+        setError(result.message || "Login failed");
+        return;
+      }
+
+      console.log("✅ Login Success:", result.response);
 
       // 🔥 Redirect after login
       navigate("/");
-
     } catch (err) {
-      const message =
-        err.response?.data?.message || "Login failed";
+      const message = err.response?.data?.message || "Login failed";
       setError(message);
     } finally {
       setLoading(false);
@@ -55,7 +59,6 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md bg-white/70 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8 space-y-5"
@@ -65,9 +68,7 @@ const Login = () => {
           <h2 className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             Welcome Back
           </h2>
-          <p className="text-gray-500 text-sm">
-            Login to your account
-          </p>
+          <p className="text-gray-500 text-sm">Login to your account</p>
         </div>
 
         {/* Error */}
