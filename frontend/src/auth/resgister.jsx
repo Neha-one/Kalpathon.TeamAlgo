@@ -49,28 +49,16 @@ const Register = () => {
     setError("");
 
     const validationError = validateForm();
-    if (validationError) {
-      setError(validationError);
-      return;
-    }
+    if (validationError) return setError(validationError);
 
     setLoading(true);
 
     try {
       const res = await API.post("/auth/register", form);
-      console.log("✅ Registration Success:", res.data);
-
-      // 🔥 Redirect to verify page with token
       navigate(`/verify/${res.data.data.VerificationToken}`);
     } catch (err) {
-      console.error("❌ API Error:", err.response?.data || err.message);
       const message =
-        err.response?.data?.message ||
-        (err.code === "ECONNABORTED"
-          ? "Server timeout. Please check backend and database."
-          : !err.response
-            ? "Cannot connect to backend. Start backend server on port 3000."
-            : "Registration failed. Please try again.");
+        err.response?.data?.message || "Registration failed";
       setError(message);
     } finally {
       setLoading(false);
@@ -78,78 +66,84 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-100 px-4">
+      
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-5"
+        className="w-full max-w-md bg-white/70 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8 space-y-5"
       >
-        <h2 className="text-2xl font-bold text-center text-blue-600">
-          Create Account
-        </h2>
+        {/* Title */}
+        <div className="text-center space-y-1">
+          <h2 className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Create Account
+          </h2>
+          <p className="text-gray-500 text-sm">
+            Join as a worker or customer
+          </p>
+        </div>
 
+        {/* Error */}
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-sm">
+          <div className="bg-red-100 border border-red-400 text-red-600 px-4 py-2 rounded-lg text-sm text-center">
             {error}
           </div>
         )}
 
-        <div className="flex items-center border rounded-lg px-3">
-          <User size={18} />
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            className="w-full p-2 outline-none"
-            value={form.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {/* Input UI Helper */}
+        {[
+          {
+            icon: <User size={18} />,
+            name: "username",
+            placeholder: "Username",
+          },
+          {
+            icon: <Mail size={18} />,
+            name: "email",
+            placeholder: "Email",
+            type: "email",
+          },
+          {
+            icon: <Lock size={18} />,
+            name: "password",
+            placeholder: "Password",
+            type: "password",
+          },
+        ].map((field) => (
+          <div
+            key={field.name}
+            className="flex items-center gap-2 border rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-500 transition"
+          >
+            {field.icon}
+            <input
+              type={field.type || "text"}
+              name={field.name}
+              placeholder={field.placeholder}
+              value={form[field.name]}
+              onChange={handleChange}
+              className="w-full p-2 outline-none bg-transparent"
+              required
+            />
+          </div>
+        ))}
 
+        {/* Custom ID */}
         <input
           type="text"
           name="customId"
           placeholder="Custom ID"
-          className="w-full border p-2 rounded-lg"
           value={form.customId}
           onChange={handleChange}
-          required
+          className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
-        <div className="flex items-center border rounded-lg px-3">
-          <Mail size={18} />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            className="w-full p-2 outline-none"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="flex items-center border rounded-lg px-3">
-          <Lock size={18} />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            className="w-full p-2 outline-none"
-            value={form.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="flex items-center border rounded-lg px-3">
+        {/* Role */}
+        <div className="flex items-center gap-2 border rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-500">
           <Briefcase size={18} />
           <select
             name="userProfession"
-            className="w-full p-2 outline-none"
             value={form.userProfession}
             onChange={handleChange}
-            required
+            className="w-full p-2 outline-none bg-transparent"
           >
             <option value="">Register as</option>
             <option value="worker">Worker</option>
@@ -157,50 +151,65 @@ const Register = () => {
           </select>
         </div>
 
+        {/* Ability */}
         {form.userProfession === "worker" && (
           <select
             name="ability"
-            className="w-full border p-2 rounded-lg"
             value={form.ability}
             onChange={handleChange}
-            required
+            className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select your profession</option>
             {abilityOptions.map((opt) => (
               <option key={opt} value={opt}>
-                {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                {opt}
               </option>
             ))}
           </select>
         )}
 
-        <select
-          name="gender"
-          className="w-full border p-2 rounded-lg"
-          value={form.gender}
-          onChange={handleChange}
-        >
-          <option value="">Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
+        {/* Gender + DOB */}
+        <div className="grid grid-cols-2 gap-3">
+          <select
+            name="gender"
+            value={form.gender}
+            onChange={handleChange}
+            className="border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
 
-        <input
-          type="date"
-          name="dateOfBirth"
-          className="w-full border p-2 rounded-lg"
-          value={form.dateOfBirth}
-          onChange={handleChange}
-        />
+          <input
+            type="date"
+            name="dateOfBirth"
+            value={form.dateOfBirth}
+            onChange={handleChange}
+            className="border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
+        {/* Button */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] transition disabled:bg-gray-400"
         >
           {loading ? "Creating..." : "Sign Up"}
         </button>
+
+        {/* Footer */}
+        <p className="text-center text-sm text-gray-500">
+          Already have an account?{" "}
+          <span
+            onClick={() => navigate("/login")}
+            className="text-blue-600 cursor-pointer hover:underline"
+          >
+            Sign In
+          </span>
+        </p>
       </form>
     </div>
   );
