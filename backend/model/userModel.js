@@ -29,16 +29,16 @@ const userSchema = new mongoose.Schema(
       default: null,
       select: false,
     },
-  
-    userProfession:{
-        type: String,
-        enum:["worker","customer"],
-        required:true,
-        default:null
+
+    userProfession: {
+      type: String,
+      enum: ["worker", "customer"],
+      required: true,
+      default: null
     },
-   
-    
-  
+
+
+
     gender: {
       type: String,
       enum: ["male", "female", "other"],
@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-  
+
     isVerified: {
       type: Boolean,
       default: false,
@@ -79,8 +79,11 @@ const userSchema = new mongoose.Schema(
       default: null,
     },
 
+    bio: {
+      type: String,
+      default: null
+    },
 
-  
   },
   { timestamps: true },
 );
