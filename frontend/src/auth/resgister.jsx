@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User, Mail, Lock, Briefcase } from "lucide-react";
+import { User, Mail, Lock, Briefcase, Eye, EyeOff } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Register = () => {
@@ -21,6 +21,7 @@ const Register = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const register = useAuthStore((state) => state.register);
 
   const abilityOptions = [
@@ -143,12 +144,6 @@ const Register = () => {
             placeholder: "Email",
             type: "email",
           },
-          {
-            icon: <Lock size={18} />,
-            name: "password",
-            placeholder: "Password",
-            type: "password",
-          },
         ].map((field) => (
           <div
             key={field.name}
@@ -166,6 +161,27 @@ const Register = () => {
             />
           </div>
         ))}
+
+        <div className="flex items-center gap-2 border rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-500 transition">
+          <Lock size={18} />
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            className="w-full p-2 outline-none bg-transparent"
+            required
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="text-gray-500 hover:text-gray-700"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
+        </div>
 
         {/* Custom ID */}
         <input
