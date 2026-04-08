@@ -3,6 +3,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import 'dotenv/config'
 import authRouter from './routes/authRoute.js'
+import userRouter from './routes/user_auth.js'
 import connectDB from './config/db.js';
 const app = express();
 app.use(express.json()); 
@@ -26,6 +27,7 @@ const corsOptions ={
 app.use(cors(corsOptions));
 
 app.use('/auth',authRouter)
+app.use('/user',userRouter)
 app.get('/', (req, res) => res.send("HotDrop Backend is Live! 🚀"));
 app.listen(PORT, () => {
     connectDB(),
