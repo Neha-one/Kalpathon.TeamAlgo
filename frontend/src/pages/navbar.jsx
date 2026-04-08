@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  User,
-  LogIn,
-  LogOut,
-  Filter,
-  Menu,
-  X,
-} from "lucide-react";
+import { User, LogIn, LogOut, Filter, Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
@@ -20,6 +13,8 @@ const Navbar = () => {
     checkAuth,
     logout,
     isLoading,
+    selectedSpecialization,
+    setSelectedSpecialization,
   } = useAuthStore();
 
   useEffect(() => {
@@ -35,12 +30,9 @@ const Navbar = () => {
     <>
       {/* 🔥 NAVBAR */}
       <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b shadow-sm">
-
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-
           {/* LEFT */}
           <div className="flex items-center gap-3">
-
             {/* 🔥 HAMBURGER (ALL DEVICES) */}
             <button
               onClick={() => setMenuOpen(true)}
@@ -60,38 +52,60 @@ const Navbar = () => {
 
           {/* CENTER (Desktop Filter) */}
           <div className="hidden md:flex items-center">
-            <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full hover:bg-gray-200 transition">
-              <Filter size={16} />
-              <select className="bg-transparent outline-none text-sm">
-                <option>Select Worker</option>
-                <option>Plumber</option>
-                <option>Electrician</option>
-                <option>Carpenter</option>
-              </select>
+            <div className="group flex items-center gap-3 bg-white/90 border border-blue-100 px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-200">
+              <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                <Filter size={14} />
+              </div>
+              <div className="relative">
+                <select
+                  className="appearance-none bg-transparent pr-7 text-sm font-medium text-gray-700 outline-none focus:text-blue-700"
+                  value={selectedSpecialization}
+                  onChange={(e) => setSelectedSpecialization(e.target.value)}
+                >
+                  <option value="all">All Workers</option>
+                  <option value="plumbers">Plumber</option>
+                  <option value="electricians">Electrician</option>
+                  <option value="tutors">Tutors</option>
+                  <option value="delivery agents">Delivery Agents</option>
+                </select>
+                <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-blue-500">
+                  ▾
+                </span>
+              </div>
             </div>
           </div>
 
           {/* RIGHT */}
           <div className="flex items-center gap-2">
-
             {/* Mobile Filter */}
-            <div className="md:hidden flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full text-xs">
-              <Filter size={14} />
-              <select className="bg-transparent outline-none">
-                <option>Work</option>
-                <option>Plumber</option>
-              </select>
+            <div className="md:hidden group flex items-center gap-2 bg-white/90 border border-blue-100 px-2.5 py-1.5 rounded-full shadow-sm hover:border-blue-200 transition-all duration-200">
+              <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
+                <Filter size={12} />
+              </div>
+              <div className="relative">
+                <select
+                  className="appearance-none bg-transparent pr-5 text-xs font-medium text-gray-700 outline-none"
+                  value={selectedSpecialization}
+                  onChange={(e) => setSelectedSpecialization(e.target.value)}
+                >
+                  <option value="all">All</option>
+                  <option value="plumbers">Plumber</option>
+                  <option value="electricians">Electrician</option>
+                  <option value="tutors">Tutors</option>
+                  <option value="delivery agents">Delivery</option>
+                </select>
+                <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-gray-400">
+                  ▾
+                </span>
+              </div>
             </div>
 
             {/* Auth */}
             {!isLoading && isAuthenticated ? (
               <div className="relative">
-
                 {/* Avatar */}
                 <button
-                  onClick={() =>
-                    setProfileMenuOpen(!profileMenuOpen)
-                  }
+                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                   className="flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full hover:bg-gray-200 transition"
                 >
                   <div className="w-7 h-7 flex items-center justify-center bg-blue-600 text-white rounded-full text-xs font-bold">
@@ -106,9 +120,7 @@ const Navbar = () => {
                 {/* Dropdown */}
                 {profileMenuOpen && (
                   <div className="absolute right-0 mt-2 bg-white border rounded-xl shadow-lg p-3 w-[150px]">
-                    <p className="text-center text-sm mb-2">
-                      {user?.username}
-                    </p>
+                    <p className="text-center text-sm mb-2">{user?.username}</p>
 
                     <button
                       onClick={handleLogout}
@@ -160,7 +172,6 @@ const Navbar = () => {
           }`}
         >
           <div className="p-6 flex flex-col gap-6">
-
             {/* Header */}
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-semibold">Menu</h2>
@@ -196,12 +207,8 @@ const Navbar = () => {
                   {user?.username?.charAt(0)}
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">
-                    Logged in as
-                  </p>
-                  <p className="font-medium">
-                    {user?.username}
-                  </p>
+                  <p className="text-sm text-gray-500">Logged in as</p>
+                  <p className="font-medium">{user?.username}</p>
                 </div>
               </div>
             )}

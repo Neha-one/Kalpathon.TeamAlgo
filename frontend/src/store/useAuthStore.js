@@ -22,8 +22,11 @@ export const useAuthStore = create((set) => ({
   isLoading: false,
   error: "",
   success: "",
+  selectedSpecialization: "all",
 
   clearMessages: () => set({ error: "", success: "" }),
+  setSelectedSpecialization: (value) =>
+    set({ selectedSpecialization: value || "all" }),
 
   register: async (formData) => {
     set({ isLoading: true, error: "", success: "" });
@@ -89,6 +92,7 @@ export const useAuthStore = create((set) => ({
         isAuthenticated: false,
         isLoading: false,
         success: res?.data?.message || "Logged out",
+        selectedSpecialization: "all",
       });
       return { ok: true };
     } catch (error) {
