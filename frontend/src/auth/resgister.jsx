@@ -15,6 +15,8 @@ const Register = () => {
     dateOfBirth: "",
     userProfession: "",
     ability: "",
+    priceRange: "",
+    phoneNumber: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -28,8 +30,21 @@ const Register = () => {
     "delivery agents",
   ];
 
+  const priceRangeOptions = ["500-1000", "1000-5000", "5000-10000", "10000+"];
+
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prev) => {
+      const next = { ...prev, [name]: value };
+
+      if (name === "userProfession" && value !== "worker") {
+        next.ability = "";
+        next.priceRange = "";
+        next.phoneNumber = "";
+      }
+
+      return next;
+    });
     setError("");
   };
 
@@ -37,11 +52,18 @@ const Register = () => {
     if (!form.customId.trim()) return "Custom ID is required";
     if (!form.username.trim()) return "Username is required";
     if (!form.email.trim()) return "Email is required";
+    if (!/^\S+@\S+\.\S+$/.test(form.email.trim()))
+      return "Please enter a valid email";
     if (!form.password || form.password.length < 6)
       return "Password must be at least 6 characters";
     if (!form.userProfession) return "Please select Worker or Customer";
-    if (form.userProfession === "worker" && !form.ability)
-      return "Workers must select their profession";
+    if (
+      form.userProfession === "worker" &&
+      !form.ability &&
+      !form.priceRange &&
+      !form.phoneNumber.trim()
+    )
+      return "For workers, add ability or price range or phone number";
     return "";
   };
 
@@ -55,7 +77,24 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const result = await register(form);
+      const payload = {
+        customId: form.customId.trim().toLowerCase(),
+        username: form.username.trim(),
+        email: form.email.trim().toLowerCase(),
+        password: form.password,
+        gender: form.gender || undefined,
+        dateOfBirth: form.dateOfBirth || undefined,
+        userProfession: form.userProfession,
+        ability: form.userProfession === "worker" ? form.ability : undefined,
+        priceRange:
+          form.userProfession === "worker" ? form.priceRange : undefined,
+        phoneNumber:
+          form.userProfession === "worker"
+            ? form.phoneNumber.trim() || undefined
+            : undefined,
+      };
+
+      const result = await register(payload);
       if (!result.ok) {
         setError(result.message || "Registration failed");
         return;
@@ -155,19 +194,44 @@ const Register = () => {
 
         {/* Ability */}
         {form.userProfession === "worker" && (
-          <select
-            name="ability"
-            value={form.ability}
-            onChange={handleChange}
-            className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="">Select your profession</option>
-            {abilityOptions.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt}
-              </option>
-            ))}
-          </select>
+          <div className="grid grid-cols-1 gap-3">
+            <select
+              name="ability"
+              value={form.ability}
+              onChange={handleChange}
+              className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Select your profession</option>
+              {abilityOptions.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+
+            <select
+              name="priceRange"
+              value={form.priceRange}
+              onChange={handleChange}
+              className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Select your price range</option>
+              {priceRangeOptions.map((range) => (
+                <option key={range} value={range}>
+                  {range}
+                </option>
+              ))}
+            </select>
+
+            <input
+              type="tel"
+              name="phoneNumber"
+              placeholder="Phone Number"
+              value={form.phoneNumber}
+              onChange={handleChange}
+              className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
         )}
 
         {/* Gender + DOB */}
