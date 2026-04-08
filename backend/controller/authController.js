@@ -8,7 +8,7 @@ import { sentOtpMail } from "../sentOTP/sentOTP.js";
 
 export const registerUser = async (req, res) => {
   try {
-    const { customId,userProfession ,username, ability, email, password, gender, dateOfBirth } =
+    const { customId,userProfession ,username, ability, priceRange, email, password, gender, dateOfBirth } =
       req.body;
 
     if (!email || !customId || !username || !userProfession) {
@@ -42,6 +42,8 @@ if(userProfession === "worker" && !ability)
       email: normalizedEmail,
       password: hashedPassword,
       gender,
+      ability,
+      priceRange,
       dateOfBirth,
       username,
       userProfession

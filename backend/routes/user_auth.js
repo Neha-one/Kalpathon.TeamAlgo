@@ -1,10 +1,10 @@
 import express from "express";
 import { protect } from "../middleware/protect.js";
-import { checkAuth, getAllUser } from "../controller/userController.js";
+import { bioUpdate, checkAuth, getAllUser, getMe, getUserByCustomId } from "../controller/userController.js";
 const router = express.Router();
 
 
-router.get('/getallUser', getAllUser);
+router.get('/', getAllUser);
 router.get("/checkauth", protect, checkAuth);
 
 router.get("/userprofile/:customId", getUserByCustomId);

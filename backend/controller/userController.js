@@ -4,7 +4,7 @@ export const getAllUser = async (req, res) => {
     try {
         const myId = req.user?._id;
         const users = await User.find({ _id: { $ne: myId } })
-            .select("customId username profilePicture email userProfession gender phoneNumber")
+            .select("customId username profilePicture email userProfession gender phoneNumber bio ability priceRange")
             .limit(20);
 
         return response(res, 200, "Users fetched successfully", { users });

@@ -6,13 +6,15 @@ import Verify from "./auth/verify";
 import Login from "./auth/login";
 import VerifyPage from "./auth/verify_1";
 import VerifyPage_1 from "./auth/verify_1";
+import WorkersCard from "./pages/Cards/WorkersCard";
+import WorkersList from "./pages/Cards/WorkersList";
 
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Navbar />,
+      element: <><Navbar /><WorkersList></WorkersList></>,
       
     },
     {
