@@ -46,6 +46,8 @@ if(userProfession === "worker" && !ability && !priceRange&& !phoneNumber)
       priceRange,
       dateOfBirth,
       username,
+      phoneNumber
+      ,
       userProfession
     });
 
