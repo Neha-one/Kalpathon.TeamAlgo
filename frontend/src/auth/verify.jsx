@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { CheckCircle, XCircle, Loader } from "lucide-react";
 import API from "../api/Api";
@@ -6,11 +6,15 @@ import API from "../api/Api";
 const VerifyPage = () => {
   const { token } = useParams();
   const navigate = useNavigate();
+  const hasTriggered = useRef(false);
 
   const [status, setStatus] = useState("loading"); // loading | success | error
   const [message, setMessage] = useState("Verifying your email...");
 
   useEffect(() => {
+    if (hasTriggered.current) return;
+    hasTriggered.current = true;
+
     const verifyUser = async () => {
       try {
         const res = await API.get(`/auth/verification/${token}`);
