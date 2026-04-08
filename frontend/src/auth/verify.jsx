@@ -3,7 +3,7 @@ import { CheckCircle, XCircle, Loader2, Mail } from "lucide-react";
 import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-import API from "../api/Api";
+import API from "./api/Api";
 
 const Verify = () => {
   const [searchParams] = useSearchParams();

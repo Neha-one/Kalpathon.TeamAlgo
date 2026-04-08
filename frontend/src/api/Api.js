@@ -1,22 +1,20 @@
-import axios from 'axios';
-const URL= import.meta.env.VITE_BACKEND_URL
+import axios from "axios";
+
+const URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
 const API = axios.create({
-  
-  baseURL: URL, 
-  
- 
+  baseURL: URL,
   withCredentials: true,
-  
-  
-  timeout: 10000, 
+  timeout: 10000,
 });
 
-// Requests bhejne se pehle agar kuch header add karna ho (jaise logging)
-API.interceptors.request.use((config) => {
-  console.log(`🚀 Sending ${config.method.toUpperCase()} to ${config.url}`);
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+API.interceptors.request.use(
+  (config) => {
+    const method = config.method ? config.method.toUpperCase() : "GET";
+    console.log(`🚀 Sending ${method} to ${config.baseURL}${config.url}`);
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 export default API;

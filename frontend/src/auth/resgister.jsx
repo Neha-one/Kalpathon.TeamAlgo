@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { User, Mail, Lock, Briefcase } from "lucide-react";
+import API from "../api/Api.js";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     customId: "",
     username: "",
@@ -11,30 +14,64 @@ const Register = () => {
     gender: "",
     dateOfBirth: "",
     userProfession: "",
+    ability: "",
   });
 
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const abilityOptions = [
+    "plumbers",
+    "tutors",
+    "electricians",
+    "delivery agents",
+  ];
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    setError("");
+  };
+
+  const validateForm = () => {
+    if (!form.customId.trim()) return "Custom ID is required";
+    if (!form.username.trim()) return "Username is required";
+    if (!form.email.trim()) return "Email is required";
+    if (!form.password || form.password.length < 6)
+      return "Password must be at least 6 characters";
+    if (!form.userProfession) return "Please select Worker or Customer";
+    if (form.userProfession === "worker" && !form.ability)
+      return "Workers must select their profession";
+    return "";
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        "http://localhost:8080/auth/register",
-        form,
-        { withCredentials: true } // IMPORTANT for cookies
-      );
+      const res = await API.post("/auth/register", form);
+      console.log("✅ Registration Success:", res.data);
 
-      alert(res.data.message);
-      console.log(res.data);
-
+      // 🔥 Redirect to verify page with token
+      navigate(`/verify/${res.data.data.VerificationToken}`);
     } catch (err) {
-      alert(err.response?.data?.message || "Error");
+      console.error("❌ API Error:", err.response?.data || err.message);
+      const message =
+        err.response?.data?.message ||
+        (err.code === "ECONNABORTED"
+          ? "Server timeout. Please check backend and database."
+          : !err.response
+            ? "Cannot connect to backend. Start backend server on port 3000."
+            : "Registration failed. Please try again.");
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -42,7 +79,6 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md space-y-5"
@@ -51,7 +87,12 @@ const Register = () => {
           Create Account
         </h2>
 
-        {/* Username */}
+        {error && (
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded text-sm">
+            {error}
+          </div>
+        )}
+
         <div className="flex items-center border rounded-lg px-3">
           <User size={18} />
           <input
@@ -59,22 +100,22 @@ const Register = () => {
             name="username"
             placeholder="Username"
             className="w-full p-2 outline-none"
+            value={form.username}
             onChange={handleChange}
             required
           />
         </div>
 
-        {/* Custom ID */}
         <input
           type="text"
           name="customId"
           placeholder="Custom ID"
           className="w-full border p-2 rounded-lg"
+          value={form.customId}
           onChange={handleChange}
           required
         />
 
-        {/* Email */}
         <div className="flex items-center border rounded-lg px-3">
           <Mail size={18} />
           <input
@@ -82,12 +123,12 @@ const Register = () => {
             name="email"
             placeholder="Email"
             className="w-full p-2 outline-none"
+            value={form.email}
             onChange={handleChange}
             required
           />
         </div>
 
-        {/* Password */}
         <div className="flex items-center border rounded-lg px-3">
           <Lock size={18} />
           <input
@@ -95,51 +136,68 @@ const Register = () => {
             name="password"
             placeholder="Password"
             className="w-full p-2 outline-none"
+            value={form.password}
             onChange={handleChange}
             required
           />
         </div>
 
-        {/* Profession */}
         <div className="flex items-center border rounded-lg px-3">
           <Briefcase size={18} />
           <select
             name="userProfession"
             className="w-full p-2 outline-none"
+            value={form.userProfession}
             onChange={handleChange}
             required
           >
             <option value="">Register as</option>
-            <option value="user">User</option>
             <option value="worker">Worker</option>
-            
+            <option value="customer">Customer</option>
           </select>
         </div>
 
-        {/* Gender */}
+        {form.userProfession === "worker" && (
+          <select
+            name="ability"
+            className="w-full border p-2 rounded-lg"
+            value={form.ability}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select your profession</option>
+            {abilityOptions.map((opt) => (
+              <option key={opt} value={opt}>
+                {opt.charAt(0).toUpperCase() + opt.slice(1)}
+              </option>
+            ))}
+          </select>
+        )}
+
         <select
           name="gender"
           className="w-full border p-2 rounded-lg"
+          value={form.gender}
           onChange={handleChange}
         >
-          <option value="">Select Gender</option>
+          <option value="">Gender</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
+          <option value="other">Other</option>
         </select>
 
-        {/* DOB */}
         <input
           type="date"
           name="dateOfBirth"
           className="w-full border p-2 rounded-lg"
+          value={form.dateOfBirth}
           onChange={handleChange}
         />
 
-        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
         >
           {loading ? "Creating..." : "Sign Up"}
         </button>
