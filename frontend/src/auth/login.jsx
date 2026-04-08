@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Mail, Lock, User } from "lucide-react";
+import { Mail, Lock, User, Eye, EyeOff } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Login = () => {
@@ -15,6 +15,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [useEmail, setUseEmail] = useState(true); // toggle login type
+  const [showPassword, setShowPassword] = useState(false);
   const login = useAuthStore((state) => state.login);
 
   const handleChange = (e) => {
@@ -118,7 +119,7 @@ const Login = () => {
         <div className="flex items-center gap-2 border rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-500">
           <Lock size={18} />
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
             value={form.password}
@@ -126,6 +127,14 @@ const Login = () => {
             className="w-full p-2 outline-none bg-transparent"
             required
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="text-gray-500 hover:text-gray-700"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+          </button>
         </div>
 
         {/* Submit */}
