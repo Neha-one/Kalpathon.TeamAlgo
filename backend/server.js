@@ -1,11 +1,13 @@
 import express from 'express'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 import 'dotenv/config'
 import authRouter from './routes/authRoute.js'
 import connectDB from './config/db.js';
 const app = express();
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.get('/keep-alive', (req, res) => {
   res.status(200).json({ 
     success: true, 

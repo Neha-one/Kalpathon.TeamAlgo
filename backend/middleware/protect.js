@@ -1,11 +1,12 @@
-import { response } from "express";
+
 import jwt from "jsonwebtoken";
 import User from "../model/userModel.js";
+import response from "../utils/responseHandle.js";
 export const protect = async (req, res, next) => {
   try {
-     console.log("🟡 PROTECT middleware entered");
+    console.log("🟡 PROTECT middleware entered");
 
-    const token = req.cookies.auth_token;
+    const token = req.cookies && req.cookies.auth_token;
 
     if (!token) {
       return response(res, 401, "Session expired, please login again");
