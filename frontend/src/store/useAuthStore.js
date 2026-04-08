@@ -10,6 +10,11 @@ const getErrorMessage = (error, fallback) => {
   );
 };
 
+const normalizeUser = (data) => {
+  if (!data) return null;
+  return data.user ? data.user : data;
+};
+
 export const useAuthStore = create((set) => ({
   user: null,
   token: null,
@@ -40,7 +45,7 @@ export const useAuthStore = create((set) => ({
     set({ isLoading: true, error: "", success: "" });
     try {
       const res = await API.post("/auth/login", payload);
-      const userData = res?.data?.data || null;
+      const userData = normalizeUser(res?.data?.data);
 
       set({
         user: userData,
@@ -97,7 +102,7 @@ export const useAuthStore = create((set) => ({
     set({ isLoading: true, error: "" });
     try {
       const res = await API.get("/user/checkauth");
-      const userData = res?.data?.data || null;
+      const userData = normalizeUser(res?.data?.data);
       set({
         user: userData,
         isAuthenticated: true,
