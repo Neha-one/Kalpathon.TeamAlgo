@@ -13,7 +13,7 @@ const VerifyPage = () => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const res = await API.get(`/auth/verify/${token}`);
+        const res = await API.get(`/auth/verification/${token}`);
         setStatus("success");
         setMessage(res.data.message);
 
@@ -21,12 +21,9 @@ const VerifyPage = () => {
         setTimeout(() => {
           navigate("/login");
         }, 2000);
-
       } catch (err) {
         setStatus("error");
-        setMessage(
-          err.response?.data?.message || "Verification failed"
-        );
+        setMessage(err.response?.data?.message || "Verification failed");
       }
     };
 
@@ -35,9 +32,7 @@ const VerifyPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      
       <div className="bg-white/70 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8 max-w-md w-full text-center space-y-5">
-        
         {/* Icon */}
         <div className="flex justify-center">
           {status === "loading" && (
@@ -46,9 +41,7 @@ const VerifyPage = () => {
           {status === "success" && (
             <CheckCircle className="text-green-500" size={50} />
           )}
-          {status === "error" && (
-            <XCircle className="text-red-500" size={50} />
-          )}
+          {status === "error" && <XCircle className="text-red-500" size={50} />}
         </div>
 
         {/* Title */}

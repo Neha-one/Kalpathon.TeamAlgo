@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, Mail, Lock, Briefcase } from "lucide-react";
-import API from "../api/Api.js";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ const Register = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const register = useAuthStore((state) => state.register);
 
   const abilityOptions = [
     "plumbers",
@@ -54,11 +55,15 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await API.post("/auth/register", form);
-      navigate(`/verify/${res.data.data.VerificationToken}`);
+      const result = await register(form);
+      if (!result.ok) {
+        setError(result.message || "Registration failed");
+        return;
+      }
+
+      navigate(`/verify/${result.verificationToken}`);
     } catch (err) {
-      const message =
-        err.response?.data?.message || "Registration failed";
+      const message = err.response?.data?.message || "Registration failed";
       setError(message);
     } finally {
       setLoading(false);
@@ -67,7 +72,6 @@ const Register = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-100 px-4">
-      
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md bg-white/70 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8 space-y-5"
@@ -77,9 +81,7 @@ const Register = () => {
           <h2 className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
             Create Account
           </h2>
-          <p className="text-gray-500 text-sm">
-            Join as a worker or customer
-          </p>
+          <p className="text-gray-500 text-sm">Join as a worker or customer</p>
         </div>
 
         {/* Error */}
