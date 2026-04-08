@@ -8,6 +8,8 @@ import VerifyPage from "./auth/verify";
 import VerifyPage_1 from "./auth/verify_1";
 import WorkersCard from "./pages/Cards/WorkersCard";
 import WorkersList from "./pages/Cards/WorkersList";
+import About from "./pages/about";
+import Notice from "./pages/notice";
 
 
 function App() {
@@ -35,6 +37,16 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+      
+    },
+    {
+      path: "/about",
+      element: <About/>,
+      
+    },
+    {
+      path: "/notice",
+      element: <Notice/>,
       
     },
   ]);

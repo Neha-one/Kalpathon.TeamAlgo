@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { User, LogIn, LogOut, Filter } from "lucide-react";
+import {
+  User,
+  LogIn,
+  LogOut,
+  Filter,
+  Menu,
+  X,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Navbar = () => {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const {
     user,
@@ -16,7 +24,7 @@ const Navbar = () => {
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth]);
+  }, []);
 
   const handleLogout = async () => {
     await logout();
@@ -24,125 +32,183 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-gray-200 shadow-sm">
+    <>
+      {/* 🔥 NAVBAR */}
+      <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b shadow-sm">
 
-      {/* 🔥 TOP BAR */}
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
-        {/* Logo */}
-        <Link
-          to="/"
-          className="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"
-        >
-          WorkerHub
-        </Link>
+          {/* LEFT */}
+          <div className="flex items-center gap-3">
 
-        {/* 🔥 MOBILE CENTER */}
-        <div className="relative flex items-center gap-2 md:hidden">
-
-          {/* Filter */}
-          <div className="flex items-center gap-1 bg-gray-100 px-3 py-1.5 rounded-full text-xs shadow-sm">
-            <Filter size={14} />
-            <select className="bg-transparent outline-none text-xs">
-              <option>Work</option>
-              <option>Plumber</option>
-              <option>Electrician</option>
-              <option>Carpenter</option>
-            </select>
-          </div>
-
-          {/* USER / LOGIN */}
-          {!isLoading && isAuthenticated ? (
+            {/* 🔥 HAMBURGER (ALL DEVICES) */}
             <button
-              onClick={() => setProfileMenuOpen((prev) => !prev)}
-              className="flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full text-xs shadow-sm"
+              onClick={() => setMenuOpen(true)}
+              className="p-2 rounded-lg hover:bg-gray-100 transition"
             >
-              <div className="w-6 h-6 flex items-center justify-center rounded-full bg-blue-600 text-white text-[11px] font-bold">
-                {user?.username?.charAt(0).toUpperCase()}
-              </div>
-              <span className="max-w-[80px] truncate font-medium">
-                {user?.username}
-              </span>
+              <Menu size={22} />
             </button>
-          ) : (
+
+            {/* Logo */}
             <Link
-              to="/login"
-              className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1.5 rounded-full text-xs shadow-sm"
+              to="/"
+              className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"
             >
-              <LogIn size={14} />
-              Sign In
+              WorkerHub
             </Link>
-          )}
-
-          {/* 🔥 DROPDOWN FIXED */}
-          {profileMenuOpen && isAuthenticated && (
-            <div className="absolute top-12 right-0 z-50 bg-white border border-gray-200 rounded-xl shadow-xl p-3 w-[140px]">
-
-              <div className="text-center text-sm font-medium mb-2">
-                {user?.username}
-              </div>
-
-              <button
-                onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-2 text-sm bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition"
-              >
-                <LogOut size={14} />
-                Logout
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-5">
-
-          <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full">
-            <Filter size={16} />
-            <select className="bg-transparent outline-none text-sm">
-              <option>Select Worker</option>
-              <option>Plumber</option>
-              <option>Electrician</option>
-              <option>Carpenter</option>
-              <option>Painter</option>
-            </select>
           </div>
 
-          {!isLoading && isAuthenticated ? (
-            <div className="flex items-center gap-4">
+          {/* CENTER (Desktop Filter) */}
+          <div className="hidden md:flex items-center">
+            <div className="flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-full hover:bg-gray-200 transition">
+              <Filter size={16} />
+              <select className="bg-transparent outline-none text-sm">
+                <option>Select Worker</option>
+                <option>Plumber</option>
+                <option>Electrician</option>
+                <option>Carpenter</option>
+              </select>
+            </div>
+          </div>
 
-              <div className="flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full">
-                <div className="w-7 h-7 flex items-center justify-center rounded-full bg-blue-600 text-white text-xs font-bold">
-                  {user?.username?.charAt(0).toUpperCase()}
-                </div>
-                <span className="text-sm font-medium">
-                  {user?.username}
-                </span>
+          {/* RIGHT */}
+          <div className="flex items-center gap-2">
+
+            {/* Mobile Filter */}
+            <div className="md:hidden flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-full text-xs">
+              <Filter size={14} />
+              <select className="bg-transparent outline-none">
+                <option>Work</option>
+                <option>Plumber</option>
+              </select>
+            </div>
+
+            {/* Auth */}
+            {!isLoading && isAuthenticated ? (
+              <div className="relative">
+
+                {/* Avatar */}
+                <button
+                  onClick={() =>
+                    setProfileMenuOpen(!profileMenuOpen)
+                  }
+                  className="flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full hover:bg-gray-200 transition"
+                >
+                  <div className="w-7 h-7 flex items-center justify-center bg-blue-600 text-white rounded-full text-xs font-bold">
+                    {user?.username?.charAt(0).toUpperCase()}
+                  </div>
+
+                  <span className="hidden md:block text-sm font-medium">
+                    {user?.username}
+                  </span>
+                </button>
+
+                {/* Dropdown */}
+                {profileMenuOpen && (
+                  <div className="absolute right-0 mt-2 bg-white border rounded-xl shadow-lg p-3 w-[150px]">
+                    <p className="text-center text-sm mb-2">
+                      {user?.username}
+                    </p>
+
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center justify-center gap-2 bg-red-500 text-white py-2 rounded-lg text-sm hover:bg-red-600 transition"
+                    >
+                      <LogOut size={14} />
+                      Logout
+                    </button>
+                  </div>
+                )}
               </div>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-sm text-gray-700 hover:text-blue-600"
+                >
+                  Sign In
+                </Link>
 
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-red-500 text-white text-sm hover:bg-red-600"
-              >
-                <LogOut size={16} />
-                Logout
+                <Link
+                  to="/register"
+                  className="hidden md:block px-4 py-2 bg-blue-600 text-white rounded-full text-sm hover:bg-blue-700"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      {/* 🔥 SIDEBAR (ALL DEVICES) */}
+      <div
+        className={`fixed inset-0 z-50 transition ${
+          menuOpen ? "visible opacity-100" : "invisible opacity-0"
+        }`}
+      >
+        {/* Overlay */}
+        <div
+          className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+          onClick={() => setMenuOpen(false)}
+        />
+
+        {/* Drawer */}
+        <div
+          className={`absolute left-0 top-0 h-full w-[260px] bg-white shadow-xl transition-transform duration-300 ${
+            menuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <div className="p-6 flex flex-col gap-6">
+
+            {/* Header */}
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold">Menu</h2>
+              <button onClick={() => setMenuOpen(false)}>
+                <X size={22} />
               </button>
             </div>
-          ) : (
-            <>
-              <Link to="/login" className="text-sm">
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="px-4 py-2 rounded-full bg-blue-600 text-white text-sm"
-              >
-                Get Started
-              </Link>
-            </>
-          )}
+
+            {/* Links */}
+            <Link
+              to="/about"
+              onClick={() => setMenuOpen(false)}
+              className="text-base font-medium hover:text-blue-600 transition"
+            >
+              About
+            </Link>
+
+            <Link
+              to="/notice"
+              onClick={() => setMenuOpen(false)}
+              className="text-base font-medium hover:text-blue-600 transition"
+            >
+              Notice
+            </Link>
+
+            {/* Divider */}
+            <div className="border-t pt-4" />
+
+            {/* User Info */}
+            {isAuthenticated && (
+              <div className="flex items-center gap-3 bg-gray-100 p-3 rounded-xl">
+                <div className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-full font-bold">
+                  {user?.username?.charAt(0)}
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">
+                    Logged in as
+                  </p>
+                  <p className="font-medium">
+                    {user?.username}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </nav>
+    </>
   );
 };
 
