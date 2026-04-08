@@ -1,15 +1,20 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './App.css';
 import Navbar from "./pages/navbar";
+import Register from "./auth/resgister";
+
 
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Navbar />,
-      children: [
-       
-      ],
+      
+    },
+    {
+      path: "/register",
+      element: <Register />,
+      
     },
   ]);
 
