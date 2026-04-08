@@ -8,12 +8,14 @@ import { sentOtpMail } from "../sentOTP/sentOTP.js";
 
 export const registerUser = async (req, res) => {
   try {
-    const { customId,userProfession ,username, email, password, gender, dateOfBirth } =
+    const { customId,userProfession ,username, ability, email, password, gender, dateOfBirth } =
       req.body;
 
     if (!email || !customId || !username || !userProfession) {
       return response(res, 400, "Required fields are missing");
     }
+if(userProfession === "worker" && !ability)
+    return response(res, 400, "Ability is required for workers");
 
     const normalizedEmail = email.toLowerCase();
     const normalizedId = customId.toLowerCase();

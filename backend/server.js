@@ -17,6 +17,14 @@ app.get('/keep-alive', (req, res) => {
   });
 });
 const PORT = process.env.PORT || 3000
+const URL=process.env.FRONTEND_URL
+const corsOptions ={
+  origin: URL,
+  credentials: true ,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
+}; 
+app.use(cors(corsOptions));
 
 app.use('/auth',authRouter)
 app.use('/user',userRouter)
