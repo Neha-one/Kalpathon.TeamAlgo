@@ -1,5 +1,28 @@
 {
   "dependencies": {
-    "express": "^5.2.1"
+    "@getbrevo/brevo": "^5.0.3",
+    "@google/generative-ai": "^0.24.1",
+    "axios": "^1.14.0",
+    "bcryptjs": "^3.0.3",
+    "browser-image-compression": "^2.0.2",
+    "cheerio": "^1.2.0",
+    "cloudinary": "^1.41.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.4.1",
+    "multer": "^2.1.1",
+    "multer-storage-cloudinary": "^4.0.0",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^8.0.5",
+    "nodemon": "^3.1.14",
+    "passport": "^0.7.0",
+    "passport-google-oauth2": "^0.2.0",
+    "resend": "^6.10.0",
+    "router": "^2.2.0",
+    "slugify": "^1.6.9"
   }
 }
