@@ -26,6 +26,7 @@ function App() {
     {
       path: "/register",
       element: <Register />,
+
     },
     {
       path: "/verify/:token",

@@ -53,7 +53,7 @@ const Navbar = () => {
                 <BriefcaseBusiness size={18} />
               </span>
               <span className="text-lg font-extrabold tracking-tight text-slate-900 md:text-xl">
-                WorkerHub Pro
+                WorkerHub 
               </span>
             </Link>
           </div>
