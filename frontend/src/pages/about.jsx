@@ -1,13 +1,14 @@
 import React from "react";
 import arjunImage from "../assets/ar.jpeg";
 import ankitImage from "../assets/an.jpeg";
-
+import ramimage from "../assets/ram.jpeg";
+import nehaImage from "../assets/neha.jpeg";
 const teamMembers = [
   {
     name: "Neha Kumari Baranwal",
     role: "Team Member",
     roleColor: "text-blue-600",
-    image: "", // Add image URL here
+    image: nehaImage, // Add image URL here
     links: {
       github: "https://github.com/Neha-one/",
       linkedin: "https://www.linkedin.com/in/neha-baranwal-9b2180340",
@@ -18,7 +19,7 @@ const teamMembers = [
     name: "Rampratap Yadav",
     role: "Team Member",
     roleColor: "text-indigo-600",
-    image: "", // Add image URL here
+    image: ramimage, // Add image URL here
     links: {
       github: "https://github.com/SholeyBhai",
       linkedin: "https://www.linkedin.com/in/rampratap-yadav-8634562ab/",
