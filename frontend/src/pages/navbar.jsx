@@ -49,9 +49,7 @@ const Navbar = () => {
             </button>
 
             <Link to="/" className="flex items-center gap-2">
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-linear-to-br from-blue-600 to-indigo-700 text-white shadow-lg shadow-blue-500/30">
-                <BriefcaseBusiness size={18} />
-              </span>
+              
               <span className="text-lg font-extrabold tracking-tight text-slate-900 md:text-xl">
                 WorkerHub 
               </span>
@@ -82,13 +80,13 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="md:hidden flex items-center rounded-xl border border-blue-100 bg-white/90 px-2 py-1.5 shadow-sm transition hover:border-blue-200">
-              <div className="mr-1.5 grid h-6 w-6 place-items-center rounded-lg bg-blue-50 text-blue-700">
-                <Filter size={12} />
+            <div className="md:hidden flex items-center rounded-lg border border-blue-100 bg-white/90 px-1.5 py-1 shadow-sm transition hover:border-blue-200">
+              <div className="mr-1 grid h-5 w-5 place-items-center rounded bg-blue-50 text-blue-700">
+                <Filter size={10} />
               </div>
               <div className="relative">
                 <select
-                  className="max-w-27 cursor-pointer appearance-none rounded-lg border border-transparent bg-transparent py-1 pl-1 pr-5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-200 focus:bg-blue-50/40"
+                  className="max-w-24 cursor-pointer appearance-none rounded-md border border-transparent bg-transparent py-0.5 pl-0.5 pr-4 text-[10px] font-bold text-slate-700 outline-none focus:border-blue-200 focus:bg-blue-50/40"
                   value={selectedSpecialization}
                   onChange={(e) => setSelectedSpecialization(e.target.value)}
                 >
@@ -99,8 +97,8 @@ const Navbar = () => {
                   <option value="delivery agents">Delivery</option>
                 </select>
                 <ChevronDown
-                  size={13}
-                  className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-slate-500"
+                  size={10}
+                  className="pointer-events-none absolute right-0.5 top-1/2 -translate-y-1/2 text-slate-500"
                 />
               </div>
             </div>

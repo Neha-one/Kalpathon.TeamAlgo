@@ -160,7 +160,7 @@ const WorkerProfile = () => {
               <div className="lg:col-span-3 space-y-8">
                 <div>
                   <h3 className="text-sm font-bold text-slate-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-                    <Quote size={16} className="text-slate-400" /> About Me
+                    <Quote size={16} className="text-slate-400" /> About 
                   </h3>
                   {profile.bio && profile.bio.trim() !== "" ? (
                     <div className="bg-slate-50 rounded-2xl p-6 text-slate-700 leading-relaxed border-l-4 border-slate-900 text-[15px]">
