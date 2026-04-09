@@ -6,6 +6,7 @@ import Register from "./auth/resgister";
 import Login from "./auth/login";
 import VerifyPage from "./auth/verify";
 import VerifyPage_1 from "./auth/verify_1";
+import UserProfile from "./auth/UserProfile";
 import WorkersCard from "./pages/Cards/WorkersCard";
 import WorkersList from "./pages/Cards/WorkersList";
 import About from "./pages/about";
@@ -37,6 +38,15 @@ function App() {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/me",
+      element: (
+        <>
+      
+          <UserProfile />
+        </>
+      ),
     },
     {
       path: "/about",

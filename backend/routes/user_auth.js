@@ -1,6 +1,8 @@
 import express from "express";
 import { protect } from "../middleware/protect.js";
 import { bioUpdate, checkAuth, getAllUser, getMe, getUserByCustomId } from "../controller/userController.js";
+import { uploadProfile } from "../config/cloudinary.js";
+import response from "../utils/responseHandle.js";
 const router = express.Router();
 
 

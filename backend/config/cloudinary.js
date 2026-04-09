@@ -61,4 +61,5 @@ export const uploadProfile = multer({
 
 export const uploadImages = upload.array("images", 3);
 
+export { cloudinary };
 export default upload;

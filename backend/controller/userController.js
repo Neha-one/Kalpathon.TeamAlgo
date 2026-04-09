@@ -1,5 +1,6 @@
 import response from "../utils/responseHandle.js";
 import User from '../model/userModel.js'
+import { cloudinary } from "../config/cloudinary.js";
 export const getAllUser = async (req, res) => {
     try {
         const myId = req.user?._id;
@@ -65,16 +66,24 @@ export const bioUpdate = async (req, res) => {
   try {
     const user = await User.findById(loggedInUserId);
     if (!user) return response(res, 404, "User not found!");
-    const updateData = {
-      bio: req.body.bio,
-      username: req.body.username,
-      customId: req.body.customId,
-      priceRange: req.body.priceRange,
-      dateOfBirth: req.body.dateOfBirth,
-      phoneNumber: req.body.phoneNumber,
-      gender: req.body.gender,
-      ability: req.body.ability,
-    };
+    const updateFields = [
+      "bio",
+      "username",
+      "customId",
+      "priceRange",
+      "dateOfBirth",
+      "phoneNumber",
+      "gender",
+      "ability",
+    ];
+    
+    const updateData = {};
+    updateFields.forEach(field => {
+      // Allow valid strings to be appended to the dict. Don't add if undefined or empty string.
+      if (req.body[field] !== undefined && req.body[field] !== "" && req.body[field] !== "null") {
+        updateData[field] = req.body[field];
+      }
+    });
     if (req.body.customId) {
       const existingUser = await User.findOne({
         customId: req.body.customId,
@@ -107,12 +116,16 @@ export const bioUpdate = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       loggedInUserId,
       { $set: updateData },
-      { returnDocument: "after", runValidators: true },
+      { new: true, runValidators: true },
     ).select("-password");
 console.log("🔥updated")
     return response(res, 200, "Profile updated successfully! ✨", updatedUser);
   } catch (error) {
-    return response(res, 500, "Update failed", null, error.message);
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(val => val.message).join(', ');
+      return response(res, 400, messages);
+    }
+    return response(res, 500, error.message || "Update failed");
   }
 };
 export const getMe = async (req, res) => {

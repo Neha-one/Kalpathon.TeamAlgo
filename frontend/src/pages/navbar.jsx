@@ -106,27 +106,37 @@ const Navbar = () => {
             </div>
 
             {!isLoading && isAuthenticated ? (
-              <div className="relative">
-                <button
-                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-slate-800 shadow-sm transition hover:border-blue-200"
+              <div className="relative flex items-center">
+                <div
+                  className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-2 py-1.5 shadow-sm transition hover:border-blue-200"
                 >
-                  <div className="grid h-8 w-8 place-items-center rounded-lg bg-linear-to-br from-blue-600 to-indigo-700 text-xs font-bold text-white">
-                    {user?.username?.charAt(0).toUpperCase()}
-                  </div>
-                  <span className="hidden max-w-24 truncate text-sm font-semibold md:block">
-                    {user?.username}
-                  </span>
-                </button>
+                  <Link
+                    to="/me"
+                    className="flex items-center gap-2 cursor-pointer group"
+                  >
+                    <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 text-xs font-bold text-white shadow-sm group-hover:shadow-md transition">
+                      {user?.username?.charAt(0).toUpperCase()}
+                    </div>
+                    <span className="hidden max-w-24 truncate text-sm font-bold text-slate-800 group-hover:text-blue-600 md:block transition-colors">
+                      {user?.username}
+                    </span>
+                  </Link>
+
+                  <div className="h-6 w-[1px] bg-slate-200 mx-1"></div>
+
+                  <button
+                    onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                    className="flex h-8 w-6 items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition"
+                  >
+                    <ChevronDown size={16} />
+                  </button>
+                </div>
 
                 {profileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-44 rounded-xl border border-slate-100 bg-white p-3 shadow-xl">
-                    <p className="mb-3 truncate text-center text-sm font-semibold text-slate-800">
-                      {user?.username}
-                    </p>
+                  <div className="absolute right-0 top-full mt-2 w-40 rounded-xl border border-slate-100 bg-white p-2 shadow-xl">
                     <button
                       onClick={handleLogout}
-                      className="premium-button w-full flex items-center justify-center gap-2 rounded-lg bg-red-500 py-2 text-sm font-semibold text-white hover:bg-red-600"
+                      className="premium-button w-full flex items-center justify-center gap-2 rounded-lg bg-red-500 py-2 text-sm font-semibold text-white hover:bg-red-600 transition"
                     >
                       <LogOut size={14} />
                       Logout
