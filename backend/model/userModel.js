@@ -23,7 +23,15 @@ const userSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-
+   ability:{
+    type: String,
+    enum:["plumbers", "tutors", "electricians", 
+"delivery agents"]
+   },
+   priceRange:{
+    type: String,
+    enum:["500-1000", "1000-5000", "5000-10000", "10000+"]
+   },
     password: {
       type: String,
       default: null,

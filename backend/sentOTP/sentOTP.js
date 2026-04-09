@@ -13,11 +13,11 @@ export const sentOtpMail = async (email, otp) => {
 
   const data = {
     sender: { 
-      name: "HotDrop Support", 
+      name: "Support", 
       email: senderEmail 
     },
     to: [{ email: email.trim().toLowerCase() }],
-    subject: "OTP Verification for Your HotDrop Account",
+    subject: "OTP Verification for Your  Account",
     htmlContent: `
       <div style="font-family: sans-serif; text-align: center; padding: 20px; border: 1px solid #eee; border-radius: 12px; max-width: 450px; margin: auto; background-color: #ffffff;">
         <h2 style="color: #2563eb; margin-bottom: 10px;">HotDrop Verification</h2>
@@ -29,7 +29,7 @@ export const sentOtpMail = async (email, otp) => {
         </div>
         <p style="font-size: 14px; color: #94a3b8;">OTP will expire in 10 min.Don't share this with anyone.</p>
         <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
-        <p style="font-size: 12px; color: #cbd5e1;">&copy; 2026 HotDrop Devs</p>
+        <p style="font-size: 12px; color: #cbd5e1;">&copy; 2026  Devs</p>
       </div>
     `
   };
