@@ -7,6 +7,7 @@ import {
   BriefcaseBusiness,
   Bell,
   Info,
+  ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
@@ -57,35 +58,51 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center rounded-2xl border border-blue-100 bg-white/85 px-3 py-2 shadow-sm">
-            <Filter size={15} className="mr-2 text-blue-600" />
-            <select
-              className="appearance-none bg-transparent pr-2 text-sm font-semibold text-slate-700 outline-none"
-              value={selectedSpecialization}
-              onChange={(e) => setSelectedSpecialization(e.target.value)}
-            >
-              <option value="all">All Workers</option>
-              <option value="plumbers">Plumber</option>
-              <option value="electricians">Electrician</option>
-              <option value="tutors">Tutors</option>
-              <option value="delivery agents">Delivery Agents</option>
-            </select>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="md:hidden flex items-center rounded-xl border border-blue-100 bg-white/85 px-2 py-1.5 shadow-sm">
-              <Filter size={14} className="mr-1.5 text-blue-600" />
+          <div className="hidden md:flex items-center rounded-2xl border border-blue-100 bg-white/90 px-2 py-2 shadow-sm transition hover:border-blue-200 hover:shadow-md">
+            <div className="mr-2 grid h-8 w-8 place-items-center rounded-xl bg-blue-50 text-blue-700">
+              <Filter size={14} />
+            </div>
+            <div className="relative">
               <select
-                className="max-w-25 appearance-none bg-transparent text-xs font-semibold text-slate-700 outline-none"
+                className="min-w-38 cursor-pointer appearance-none rounded-xl border border-transparent bg-transparent py-1.5 pl-2 pr-8 text-sm font-semibold text-slate-700 outline-none transition focus:border-blue-200 focus:bg-blue-50/40"
                 value={selectedSpecialization}
                 onChange={(e) => setSelectedSpecialization(e.target.value)}
               >
-                <option value="all">All</option>
+                <option value="all">All Workers</option>
                 <option value="plumbers">Plumber</option>
                 <option value="electricians">Electrician</option>
                 <option value="tutors">Tutors</option>
-                <option value="delivery agents">Delivery</option>
+                <option value="delivery agents">Delivery Agents</option>
               </select>
+              <ChevronDown
+                size={15}
+                className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-slate-500"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="md:hidden flex items-center rounded-xl border border-blue-100 bg-white/90 px-2 py-1.5 shadow-sm transition hover:border-blue-200">
+              <div className="mr-1.5 grid h-6 w-6 place-items-center rounded-lg bg-blue-50 text-blue-700">
+                <Filter size={12} />
+              </div>
+              <div className="relative">
+                <select
+                  className="max-w-27 cursor-pointer appearance-none rounded-lg border border-transparent bg-transparent py-1 pl-1 pr-5 text-xs font-semibold text-slate-700 outline-none focus:border-blue-200 focus:bg-blue-50/40"
+                  value={selectedSpecialization}
+                  onChange={(e) => setSelectedSpecialization(e.target.value)}
+                >
+                  <option value="all">All</option>
+                  <option value="plumbers">Plumber</option>
+                  <option value="electricians">Electrician</option>
+                  <option value="tutors">Tutors</option>
+                  <option value="delivery agents">Delivery</option>
+                </select>
+                <ChevronDown
+                  size={13}
+                  className="pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 text-slate-500"
+                />
+              </div>
             </div>
 
             {!isLoading && isAuthenticated ? (
