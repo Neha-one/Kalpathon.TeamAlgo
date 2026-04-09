@@ -158,9 +158,8 @@ const UserProfile = () => {
                     {profile.username?.charAt(0).toUpperCase() || "?"}
                   </div>
                 )}
-                <label className="absolute inset-0 bg-slate-900/60 rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-white">
-                  <Camera className="w-8 h-8 mb-1" />
-                  <span className="text-xs font-semibold">Change</span>
+                <label className="absolute bottom-2 right-2 bg-slate-900 hover:bg-slate-800 text-white p-2.5 rounded-full shadow-lg cursor-pointer transition-colors border-4 border-white flex items-center justify-center z-20">
+                  <Camera size={18} />
                   <input
                     type="file"
                     accept="image/*"
