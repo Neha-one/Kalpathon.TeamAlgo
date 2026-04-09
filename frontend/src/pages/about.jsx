@@ -39,33 +39,34 @@ const About = () => {
             {/* Founder */}
             <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition text-center">
               <h3 className="text-lg font-semibold text-blue-600">
-                Neha Bernawal
+                Neha Kumari Baranwal 
               </h3>
-              <p className="text-gray-500 text-sm">Founder</p>
-            </div>
-
-            {/* Co-Founder */}
-            <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition text-center">
-              <h3 className="text-lg font-semibold text-indigo-600">
-                Rampratap Yadav
-              </h3>
-              <p className="text-gray-500 text-sm">Co-Founder</p>
+              <p className="text-gray-500 text-sm">Team Member</p>
             </div>
 
             {/* Members */}
             <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition text-center">
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="text-lg font-semibold text-blue-600">
                 Ankit Mahabharat
               </h3>
               <p className="text-gray-500 text-sm">Team Member</p>
             </div>
 
             <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition text-center">
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="text-lg font-semibold text-blue-600">
                 Arjun Kumar Pandey
               </h3>
               <p className="text-gray-500 text-sm">Team Member</p>
             </div>
+
+            {/* Members */}
+            <div className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition text-center">
+              <h3 className="text-lg font-semibold text-blue-600">
+                Rampratap Yadav 
+              </h3>
+              <p className="text-gray-500 text-sm">Team Member</p>
+            </div>
+
 
           </div>
         </div>
