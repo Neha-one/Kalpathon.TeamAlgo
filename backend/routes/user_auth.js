@@ -3,7 +3,6 @@ import { protect } from "../middleware/protect.js";
 import { getAllUser } from "../controller/userConroller.js";
 const router = express.Router();
 
-
 router.get('/getallUser', getAllUser);
 // router.get('/verification/:token', Verification)
 // router.post('/reverificationmail', reVerificationMail)

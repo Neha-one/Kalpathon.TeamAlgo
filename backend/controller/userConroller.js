@@ -12,4 +12,3 @@ export const getAllUser = async (req, res) => {
         return response(res, 500, "Server error", null, error.message);
     }
 };
-
