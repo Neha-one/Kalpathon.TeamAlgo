@@ -1,5 +1,6 @@
 import React from "react";
 import arjunImage from "../assets/ar.jpeg";
+import ankitImage from "../assets/an.jpeg";
 
 const teamMembers = [
   {
@@ -28,11 +29,11 @@ const teamMembers = [
     name: "Ankit Mahabharat",
     role: "Team Member",
     roleColor: "text-indigo-600",
-    image: "", // Add image URL here
+    image: ankitImage, // Add image URL here
     links: {
-      github: "#",
-      linkedin: "#",
-      instagram: "#",
+      github: "https://github.com/ankitmahabharat",
+      linkedin: "https://www.linkedin.com/in/ankit-mahabharat-7730b7134/",
+      instagram: "https://www.instagram.com/ankit_mahabharat/",
     },
   },
   {
