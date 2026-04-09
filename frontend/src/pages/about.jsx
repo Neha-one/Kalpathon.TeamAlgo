@@ -9,8 +9,8 @@ const teamMembers = [
     roleColor: "text-blue-600",
     image: "", // Add image URL here
     links: {
-      github: "#",
-      linkedin: "#",
+      github: "https://github.com/Neha-one/",
+      linkedin: "https://www.linkedin.com/in/neha-baranwal-9b2180340",
       instagram: "#",
     },
   },
@@ -20,9 +20,9 @@ const teamMembers = [
     roleColor: "text-indigo-600",
     image: "", // Add image URL here
     links: {
-      github: "#",
-      linkedin: "#",
-      instagram: "#",
+      github: "https://github.com/SholeyBhai",
+      linkedin: "https://www.linkedin.com/in/rampratap-yadav-8634562ab/",
+      instagram: "https://www.instagram.com/Sholey_Bhai/",
     },
   },
   {
