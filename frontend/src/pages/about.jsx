@@ -15,17 +15,7 @@ const teamMembers = [
       instagram: "#",
     },
   },
-  {
-    name: "Rampratap Yadav",
-    role: "Team Member",
-    roleColor: "text-indigo-600",
-    image: ramimage, // Add image URL here
-    links: {
-      github: "https://github.com/SholeyBhai",
-      linkedin: "https://www.linkedin.com/in/rampratap-yadav-8634562ab/",
-      instagram: "https://www.instagram.com/Sholey_Bhai/",
-    },
-  },
+  
   {
     name: "Ankit Mahabharat",
     role: "Team Member",
@@ -46,6 +36,18 @@ const teamMembers = [
       github: "https://github.com/arjunkumarpandey45",
       linkedin: "https://www.linkedin.com/in/arjun-kumar-pandey-b2a24a330/",
       instagram: "https://www.instagram.com/ig_arjunpandit45/?hl=en",
+    },
+  },
+  
+  {
+    name: "Rampratap Yadav",
+    role: "Team Member",
+    roleColor: "text-indigo-600",
+    image: ramimage, // Add image URL here
+    links: {
+      github: "https://github.com/SholeyBhai",
+      linkedin: "https://www.linkedin.com/in/rampratap-yadav-8634562ab/",
+      instagram: "https://www.instagram.com/Sholey_Bhai/",
     },
   },
 ];
