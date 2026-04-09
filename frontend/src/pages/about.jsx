@@ -3,8 +3,8 @@ import arjunImage from "../assets/ar.jpeg";
 
 const teamMembers = [
   {
-    name: "Neha Bernawal",
-    role: "Founder",
+    name: "Neha Kumari Baranwal",
+    role: "Team Member",
     roleColor: "text-blue-600",
     image: "", // Add image URL here
     links: {
@@ -15,7 +15,7 @@ const teamMembers = [
   },
   {
     name: "Rampratap Yadav",
-    role: "Co-Founder",
+    role: "Team Member",
     roleColor: "text-indigo-600",
     image: "", // Add image URL here
     links: {
@@ -27,7 +27,7 @@ const teamMembers = [
   {
     name: "Ankit Mahabharat",
     role: "Team Member",
-    roleColor: "text-gray-800",
+    roleColor: "text-indigo-600",
     image: "", // Add image URL here
     links: {
       github: "#",
@@ -38,7 +38,7 @@ const teamMembers = [
   {
     name: "Arjun Kumar Pandey",
     role: "Team Member",
-    roleColor: "text-gray-800",
+    roleColor: "text-indigo-600",
     image: arjunImage, // Add image URL here
     links: {
       github: "https://github.com/arjunkumarpandey45",
@@ -129,23 +129,23 @@ const About = () => {
                   <div className="w-20 h-20 mb-4 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 flex items-center justify-center text-2xl font-bold border-2 border-white shadow-md text-gray-400">
                     {member.name.charAt(0)}
                   </div>
-                )}
+    )}
 
-                <h3 className="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
-                  {member.name}
-                </h3>
-                <p className={`text-sm font-medium ${member.roleColor} mt-1`}>
-                  {member.role}
-                </p>
+    <h3 className="text-lg font-bold text-gray-800 group-hover:text-blue-600 transition-colors">
+      {member.name}
+    </h3>
+    <p className={`text-sm font-medium ${member.roleColor} mt-1`}>
+      {member.role}
+    </p>
 
-                {/* Social Links */}
-                <div className="mt-5 flex space-x-4 items-center justify-center border-t border-gray-100 pt-4 w-full">
-                  <SocialIcon href={member.links.github} type="github" />
-                  <SocialIcon href={member.links.linkedin} type="linkedin" />
-                  <SocialIcon href={member.links.instagram} type="instagram" />
-                </div>
-              </div>
-            ))}
+    {/* Social Links */}
+    <div className="mt-5 flex space-x-4 items-center justify-center border-t border-gray-100 pt-4 w-full">
+      <SocialIcon href={member.links.github} type="github" />
+      <SocialIcon href={member.links.linkedin} type="linkedin" />
+      <SocialIcon href={member.links.instagram} type="instagram" />
+    </div>
+  </div>
+))}
           </div>
         </div>
 
