@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../../api/Api";
 import WorkersCard from "./WorkersCard";
 import { useAuthStore } from "../../store/useAuthStore";
+import { ShieldCheck, Sparkles } from "lucide-react";
 
 function WorkersList() {
   const [workers, setWorkers] = useState([]);
@@ -37,9 +38,9 @@ function WorkersList() {
   // Clean, standard login prompt
   if (!isAuthenticated) {
     return (
-      <div className="w-full min-h-[60vh] flex flex-col items-center justify-center p-4 bg-gray-50">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 text-center max-w-sm w-full">
-          <div className="w-16 h-16 bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="premium-page w-full min-h-[70vh] flex flex-col items-center justify-center p-4">
+        <div className="premium-card-strong fade-slide text-center max-w-sm w-full p-8">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-100 text-blue-700">
             <svg
               className="w-8 h-8"
               fill="none"
@@ -54,16 +55,16 @@ function WorkersList() {
               />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">
+          <h2 className="mb-2 text-xl font-extrabold text-slate-900">
             Login Required
           </h2>
-          <p className="text-gray-500 mb-6 text-sm">
+          <p className="mb-6 text-sm text-slate-600">
             Please sign in to view available professionals and contact them
             directly.
           </p>
           <button
             onClick={() => navigate("/login")}
-            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors cursor-pointer"
+            className="premium-button premium-button-primary w-full py-2.5 text-sm cursor-pointer"
           >
             Go to Login
           </button>
@@ -74,18 +75,18 @@ function WorkersList() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="w-10 h-10 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
+      <div className="premium-page flex justify-center items-center min-h-[60vh]">
+        <div className="h-10 w-10 rounded-full border-4 border-slate-200 border-t-blue-600 animate-spin"></div>
       </div>
     );
   }
 
   if (workers.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-        <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+      <div className="premium-page flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+        <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-blue-50">
           <svg
-            className="w-10 h-10 text-gray-400"
+            className="w-10 h-10 text-blue-500"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -98,10 +99,10 @@ function WorkersList() {
             />
           </svg>
         </div>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">
+        <h2 className="mb-2 text-xl font-extrabold text-slate-900">
           No workers found
         </h2>
-        <p className="text-gray-500 max-w-sm">
+        <p className="max-w-sm text-slate-600">
           We couldn"t find any professionals registered at the moment. Please
           check back later.
         </p>
@@ -115,25 +116,50 @@ function WorkersList() {
   });
 
   return (
-    <div className="container mx-auto px-4 py-10 min-h-screen">
-      <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Available Professionals
-        </h1>
-        <p className="text-gray-500">
-          Browse and contact our verified professionals.
-        </p>
-      </div>
-      {filteredWorkers.length === 0 && (
-        <p className="text-center text-sm text-gray-500 mb-6">
-          No workers found for selected specialization.
-        </p>
-      )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center">
-        {filteredWorkers.map((worker) => (
-          <WorkersCard key={worker._id} worker={worker} />
-        ))}
-      </div>
+    <div className="premium-page pb-12">
+      <section className="premium-shell pt-10">
+        <div className="premium-card fade-slide mb-8 overflow-hidden p-6 md:p-8">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h1 className="premium-section-title text-3xl">
+                Available Professionals
+              </h1>
+              <p className="premium-subtitle mt-2">
+                Discover trusted workers with verified profiles and clear rates.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3">
+              <ShieldCheck size={18} className="text-blue-700" />
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wider text-blue-700">
+                  Trusted Profiles
+                </p>
+                <p className="text-sm font-semibold text-slate-700">
+                  Updated listings
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mb-5 flex items-center gap-2 text-sm font-semibold text-slate-600">
+          <Sparkles size={16} className="text-blue-700" />
+          Curated workers for your selected specialization
+        </div>
+
+        {filteredWorkers.length === 0 && (
+          <p className="mb-6 text-center text-sm text-slate-500">
+            No workers found for selected specialization.
+          </p>
+        )}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center">
+          {filteredWorkers.map((worker) => (
+            <WorkersCard key={worker._id} worker={worker} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

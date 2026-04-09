@@ -123,27 +123,22 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-white to-indigo-100 px-4">
+    <div className="premium-page flex items-center justify-center px-4 py-12">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white/70 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8 space-y-5"
+        className="premium-card-strong fade-slide w-full max-w-md p-8 space-y-5"
       >
-        {/* Title */}
         <div className="text-center space-y-1">
-          <h2 className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Create Account
-          </h2>
-          <p className="text-gray-500 text-sm">Join as a worker or customer</p>
+          <h2 className="premium-section-title text-[2rem]">Create Account</h2>
+          <p className="premium-subtitle">Join as a worker or customer</p>
         </div>
 
-        {/* Error */}
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-600 px-4 py-2 rounded-lg text-sm text-center">
+          <div className="rounded-xl border border-red-300 bg-red-50 px-4 py-2 text-center text-sm text-red-600">
             {error}
           </div>
         )}
 
-        {/* Input UI Helper */}
         {[
           {
             icon: <User size={18} />,
@@ -159,60 +154,58 @@ const Register = () => {
         ].map((field) => (
           <div
             key={field.name}
-            className="flex items-center gap-2 border rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-500 transition"
+            className="premium-input flex items-center gap-2 px-3 transition"
           >
-            {field.icon}
+            <span className="text-slate-500">{field.icon}</span>
             <input
               type={field.type || "text"}
               name={field.name}
               placeholder={field.placeholder}
               value={form[field.name]}
               onChange={handleChange}
-              className="w-full p-2 outline-none bg-transparent"
+              className="w-full bg-transparent p-2.5 text-sm outline-none"
               required
             />
           </div>
         ))}
 
-        <div className="flex items-center gap-2 border rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-500 transition">
-          <Lock size={18} />
+        <div className="premium-input flex items-center gap-2 px-3 transition">
+          <Lock size={18} className="text-slate-500" />
           <input
             type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
-            className="w-full p-2 outline-none bg-transparent"
+            className="w-full bg-transparent p-2.5 text-sm outline-none"
             required
           />
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-slate-500 hover:text-slate-700"
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
 
-        {/* Custom ID */}
         <input
           type="text"
           name="customId"
           placeholder="Custom ID"
           value={form.customId}
           onChange={handleChange}
-          className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+          className="premium-input p-2.5 text-sm"
         />
 
-        {/* Role */}
-        <div className="flex items-center gap-2 border rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-500">
-          <Briefcase size={18} />
+        <div className="premium-input flex items-center gap-2 px-3">
+          <Briefcase size={18} className="text-slate-500" />
           <select
             name="userProfession"
             value={form.userProfession}
             onChange={handleChange}
-            className="w-full p-2 outline-none bg-transparent"
+            className="w-full bg-transparent p-2.5 text-sm outline-none"
           >
             <option value="">Register as</option>
             <option value="worker">Worker</option>
@@ -220,14 +213,13 @@ const Register = () => {
           </select>
         </div>
 
-        {/* Ability */}
         {form.userProfession === "worker" && (
-          <div className="grid grid-cols-1 gap-3">
+          <div className="premium-card rounded-xl p-3 grid grid-cols-1 gap-3">
             <select
               name="ability"
               value={form.ability}
               onChange={handleChange}
-              className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
+              className="premium-input p-2.5 text-sm"
             >
               <option value="">Select your profession</option>
               {abilityOptions.map((opt) => (
@@ -241,7 +233,7 @@ const Register = () => {
               name="priceRange"
               value={form.priceRange}
               onChange={handleChange}
-              className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
+              className="premium-input p-2.5 text-sm"
             >
               <option value="">Select your price range</option>
               {priceRangeOptions.map((range) => (
@@ -257,18 +249,17 @@ const Register = () => {
               placeholder="Phone Number"
               value={form.phoneNumber}
               onChange={handleChange}
-              className="w-full border rounded-xl p-2 focus:ring-2 focus:ring-blue-500 outline-none"
+              className="premium-input p-2.5 text-sm outline-none"
             />
           </div>
         )}
 
-        {/* Gender + DOB */}
         <div className="grid grid-cols-2 gap-3">
           <select
             name="gender"
             value={form.gender}
             onChange={handleChange}
-            className="border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
+            className="premium-input p-2.5 text-sm"
           >
             <option value="">Gender</option>
             <option value="male">Male</option>
@@ -281,25 +272,23 @@ const Register = () => {
             name="dateOfBirth"
             value={form.dateOfBirth}
             onChange={handleChange}
-            className="border rounded-xl p-2 focus:ring-2 focus:ring-blue-500"
+            className="premium-input p-2.5 text-sm"
           />
         </div>
 
-        {/* Button */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] transition disabled:bg-gray-400"
+          className="premium-button premium-button-primary w-full py-3"
         >
           {loading ? "Creating..." : "Sign Up"}
         </button>
 
-        {/* Footer */}
-        <p className="text-center text-sm text-gray-500">
+        <p className="text-center text-sm text-slate-500">
           Already have an account?{" "}
           <span
             onClick={() => navigate("/login")}
-            className="text-blue-600 cursor-pointer hover:underline"
+            className="cursor-pointer font-semibold text-blue-700 hover:underline"
           >
             Sign In
           </span>

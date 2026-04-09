@@ -3,35 +3,29 @@ import { AlertTriangle } from "lucide-react";
 
 const Notice = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 to-orange-100 px-4">
-      
-      <div className="max-w-md w-full bg-white/80 backdrop-blur-lg border border-yellow-200 rounded-2xl shadow-xl p-8 text-center space-y-5">
-        
-        {/* Icon */}
+    <div className="premium-page flex items-center justify-center px-4 py-12">
+      <div className="premium-card-strong fade-slide max-w-md w-full space-y-5 border-yellow-100 p-8 text-center">
         <div className="flex justify-center">
-          <div className="bg-yellow-100 p-3 rounded-full">
+          <div className="rounded-2xl bg-yellow-100 p-3">
             <AlertTriangle className="text-yellow-600" size={32} />
           </div>
         </div>
 
-        {/* Title */}
-        <h2 className="text-2xl font-bold text-gray-800">
-          🚧 Website Under Development
+        <h2 className="text-2xl font-extrabold text-slate-900">
+          Service Update In Progress
         </h2>
 
-        {/* Message */}
-        <p className="text-gray-600 text-sm leading-relaxed">
-          Our platform is currently under production.  
-          We sincerely apologize for any inconvenience you may face.
-          <br /><br />
+        <p className="text-sm leading-relaxed text-slate-600">
+          Our platform is currently under production. We sincerely apologize for
+          any inconvenience you may face.
+          <br />
+          <br />
           We are working hard to bring you a smooth and reliable experience.
         </p>
 
-        {/* Footer */}
-        <p className="text-xs text-gray-500">
-          Thank you for your patience 🙏
+        <p className="rounded-xl bg-yellow-50 px-3 py-2 text-xs text-slate-500">
+          Thank you for your patience.
         </p>
-
       </div>
     </div>
   );
