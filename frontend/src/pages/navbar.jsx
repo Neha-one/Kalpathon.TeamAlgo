@@ -59,12 +59,12 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center rounded-2xl border border-blue-100 bg-white/90 px-2 py-2 shadow-sm transition hover:border-blue-200 hover:shadow-md">
-            <div className="mr-2 grid h-8 w-8 place-items-center rounded-xl bg-blue-50 text-blue-700">
+            <div className="mr-2 grid h-8 w-4 place-items-center rounded-xl bg-blue-50 text-blue-700">
               <Filter size={14} />
             </div>
             <div className="relative">
               <select
-                className="min-w-38 cursor-pointer appearance-none rounded-xl border border-transparent bg-transparent py-1.5 pl-2 pr-8 text-sm font-semibold text-slate-700 outline-none transition focus:border-blue-200 focus:bg-blue-50/40"
+                className="min-w-20 cursor-pointer appearance-none rounded-xl border border-transparent bg-transparent py-1.5 pl-2 pr-8 text-sm font-semibold text-slate-700 outline-none transition focus:border-blue-200 focus:bg-blue-50/40"
                 value={selectedSpecialization}
                 onChange={(e) => setSelectedSpecialization(e.target.value)}
               >
@@ -133,12 +133,12 @@ const Navbar = () => {
                 </div>
 
                 {profileMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-40 rounded-xl border border-slate-100 bg-white p-2 shadow-xl">
+                  <div className="absolute right-0 top-full mt-2 z-[100] min-w-[8rem] max-w-[12rem] origin-top-right rounded-xl border border-slate-200 bg-white p-1.5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)]">
                     <button
                       onClick={handleLogout}
-                      className="premium-button w-full flex items-center justify-center gap-2 rounded-lg bg-red-500 py-2 text-sm font-semibold text-white hover:bg-red-600 transition"
+                      className="flex w-full items-center justify-center gap-2 rounded-lg bg-red-50/50 px-3 py-2 text-[13px] font-bold text-red-600 transition hover:bg-red-50 hover:text-red-700"
                     >
-                      <LogOut size={14} />
+                      <LogOut size={15} />
                       Logout
                     </button>
                   </div>

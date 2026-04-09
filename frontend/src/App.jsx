@@ -11,6 +11,7 @@ import WorkersCard from "./pages/Cards/WorkersCard";
 import WorkersList from "./pages/Cards/WorkersList";
 import About from "./pages/about";
 import Notice from "./pages/notice";
+import WorkerProfile from "./auth/WorkerProfile";
 
 function App() {
   const router = createBrowserRouter([
@@ -44,8 +45,17 @@ function App() {
       path: "/me",
       element: (
         <>
-      
+
           <UserProfile />
+        </>
+      ),
+    },
+    {
+      path: "/user/:customId",
+      element: (
+        <>
+          <Navbar />
+          <WorkerProfile />
         </>
       ),
     },

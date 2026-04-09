@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 function WorkersCard({ worker }) {
   const [showPhone, setShowPhone] = useState(false);
@@ -9,7 +10,10 @@ function WorkersCard({ worker }) {
   }
 
   return (
-    <div className="premium-card-strong fade-slide flex w-full max-w-[20rem] flex-col overflow-hidden mx-auto group border border-blue-100/70 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-blue-900/10">
+    <Link 
+      to={`/user/${worker.customId}`}
+      className="premium-card-strong fade-slide flex w-full max-w-[20rem] flex-col overflow-hidden mx-auto group border border-blue-100/70 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-blue-900/10 cursor-pointer block"
+    >
       <div className="relative w-full border-b border-blue-100/70 bg-linear-to-r from-blue-50/80 via-white to-sky-50/70 px-5 pb-4 pt-5">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
@@ -60,7 +64,11 @@ function WorkersCard({ worker }) {
         </div>
 
         <button
-          onClick={() => setShowPhone(true)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setShowPhone(true);
+          }}
           className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-xl border border-blue-100 bg-white text-blue-600 shadow-sm transition-all duration-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
           title="Contact Worker"
         >
@@ -102,7 +110,11 @@ function WorkersCard({ worker }) {
 
       {showPhone && (
         <div
-          onClick={() => setShowPhone(false)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setShowPhone(false);
+          }}
           className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/45 p-4 backdrop-blur-sm transition-opacity duration-300"
         >
           <div
@@ -131,7 +143,11 @@ function WorkersCard({ worker }) {
               {worker.phoneNumber || "Not Available"}
             </p>
             <button
-              onClick={() => setShowPhone(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowPhone(false);
+              }}
               className="premium-button premium-button-soft w-full rounded-xl py-2.5 text-sm font-bold"
             >
               Close
@@ -139,7 +155,7 @@ function WorkersCard({ worker }) {
           </div>
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 
