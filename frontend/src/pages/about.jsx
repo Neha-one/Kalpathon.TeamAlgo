@@ -15,6 +15,17 @@ const teamMembers = [
       instagram: "#",
     },
   },
+  {
+    name: "Rampratap Yadav",
+    role: "Team Member",
+    roleColor: "text-indigo-600",
+    image: ramimage, // Add image URL here
+    links: {
+      github: "https://github.com/SholeyBhai",
+      linkedin: "https://www.linkedin.com/in/rampratap-yadav-8634562ab/",
+      instagram: "https://www.instagram.com/Sholey_Bhai/",
+    },
+  },
   
   {
     name: "Ankit Mahabharat",
@@ -39,17 +50,7 @@ const teamMembers = [
     },
   },
   
-  {
-    name: "Rampratap Yadav",
-    role: "Team Member",
-    roleColor: "text-indigo-600",
-    image: ramimage, // Add image URL here
-    links: {
-      github: "https://github.com/SholeyBhai",
-      linkedin: "https://www.linkedin.com/in/rampratap-yadav-8634562ab/",
-      instagram: "https://www.instagram.com/Sholey_Bhai/",
-    },
-  },
+  
 ];
 
 const SocialIcon = ({ href, type }) => {
