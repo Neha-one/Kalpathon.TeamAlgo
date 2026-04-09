@@ -15,14 +15,14 @@ export const emailVerify = async (token, email) => {
 
   const data = {
     sender: { 
-      name: "HotDrop Support", 
+      name: "WorkerHub Support", 
       email: process.env.BREVO_USER_EMAIL || "hotdrop1229@gmail.com" 
     },
     to: [{ email: email.trim().toLowerCase() }],
-    subject: "Verify Your HotDrop Account 🚀",
+    subject: "Verify Your  Account 🚀",
     htmlContent: `
       <div style="font-family: sans-serif; text-align: center; padding: 20px; border: 1px solid #eee; border-radius: 10px; max-width: 500px; margin: auto;">
-        <h2 style="color: #2563eb;">Welcome to HotDrop!</h2>
+        <h2 style="color: #2563eb;">Welcome !</h2>
         <p>Please Click at Verify My Account:</p>
         <div style="margin: 30px 0;">
           <a href="${verificationLink}" 
