@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './App.css';
+import "./App.css";
 import Navbar from "./pages/navbar";
 import Register from "./auth/resgister";
 
@@ -11,43 +11,50 @@ import WorkersList from "./pages/Cards/WorkersList";
 import About from "./pages/about";
 import Notice from "./pages/notice";
 
-
 function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <><Navbar /><WorkersList></WorkersList></>,
-      
+      element: (
+        <>
+          <Navbar />
+          <WorkersList></WorkersList>
+        </>
+      ),
     },
     {
       path: "/register",
       element: <Register />,
-      
     },
     {
       path: "/verify/:token",
       element: <VerifyPage_1 />,
-      
     },
     {
       path: "/verify-email/:token",
       element: <VerifyPage />,
-      
     },
     {
       path: "/login",
       element: <Login />,
-      
     },
     {
       path: "/about",
-      element: <About/>,
-      
+      element: (
+        <>
+          <Navbar />
+          <About />
+        </>
+      ),
     },
     {
       path: "/notice",
-      element: <Notice/>,
-      
+      element: (
+        <>
+          <Navbar />
+          <Notice />
+        </>
+      ),
     },
   ]);
 

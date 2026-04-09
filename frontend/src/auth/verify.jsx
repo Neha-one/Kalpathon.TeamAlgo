@@ -35,9 +35,8 @@ const VerifyPage = () => {
   }, [token, navigate]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <div className="bg-white/70 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8 max-w-md w-full text-center space-y-5">
-        {/* Icon */}
+    <div className="premium-page flex items-center justify-center px-4 py-12">
+      <div className="premium-card-strong fade-slide max-w-md w-full space-y-5 p-8 text-center">
         <div className="flex justify-center">
           {status === "loading" && (
             <Loader className="animate-spin text-blue-600" size={40} />
@@ -48,21 +47,18 @@ const VerifyPage = () => {
           {status === "error" && <XCircle className="text-red-500" size={50} />}
         </div>
 
-        {/* Title */}
-        <h2 className="text-2xl font-bold">
+        <h2 className="text-2xl font-extrabold text-slate-900">
           {status === "loading" && "Verifying..."}
           {status === "success" && "Verification Successful 🎉"}
           {status === "error" && "Verification Failed"}
         </h2>
 
-        {/* Message */}
-        <p className="text-gray-600 text-sm">{message}</p>
+        <p className="text-sm text-slate-600">{message}</p>
 
-        {/* Action Buttons */}
         {status === "success" && (
           <button
             onClick={() => navigate("/login")}
-            className="w-full py-2 rounded-lg bg-green-500 text-white font-semibold hover:bg-green-600 transition"
+            className="premium-button w-full rounded-lg bg-emerald-500 py-2 text-white hover:bg-emerald-600"
           >
             Go to Login
           </button>
@@ -71,7 +67,7 @@ const VerifyPage = () => {
         {status === "error" && (
           <button
             onClick={() => navigate("/register")}
-            className="w-full py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition"
+            className="premium-button w-full rounded-lg bg-red-500 py-2 text-white hover:bg-red-600"
           >
             Try Again
           </button>

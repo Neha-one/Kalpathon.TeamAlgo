@@ -59,33 +59,30 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+    <div className="premium-page flex items-center justify-center px-4 py-12">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white/70 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl p-8 space-y-5"
+        className="premium-card-strong fade-slide w-full max-w-md p-8 space-y-5"
       >
-        {/* Title */}
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-            Welcome Back
-          </h2>
-          <p className="text-gray-500 text-sm">Login to your account</p>
+          <h2 className="premium-section-title text-[2rem]">Welcome Back</h2>
+          <p className="premium-subtitle mt-1">Login to your account</p>
         </div>
 
-        {/* Error */}
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-600 px-4 py-2 rounded-lg text-sm text-center">
+          <div className="rounded-xl border border-red-300 bg-red-50 px-4 py-2 text-center text-sm text-red-600">
             {error}
           </div>
         )}
 
-        {/* Toggle */}
-        <div className="flex justify-center gap-2">
+        <div className="flex justify-center gap-2 rounded-xl bg-slate-100 p-1.5">
           <button
             type="button"
             onClick={() => setUseEmail(true)}
-            className={`px-3 py-1 rounded-full text-sm ${
-              useEmail ? "bg-blue-600 text-white" : "bg-gray-200"
+            className={`premium-button w-1/2 px-3 py-2 rounded-lg text-sm ${
+              useEmail
+                ? "bg-linear-to-r from-blue-600 to-indigo-700 text-white"
+                : "bg-transparent text-slate-600"
             }`}
           >
             Email
@@ -93,65 +90,67 @@ const Login = () => {
           <button
             type="button"
             onClick={() => setUseEmail(false)}
-            className={`px-3 py-1 rounded-full text-sm ${
-              !useEmail ? "bg-blue-600 text-white" : "bg-gray-200"
+            className={`premium-button w-1/2 px-3 py-2 rounded-lg text-sm ${
+              !useEmail
+                ? "bg-linear-to-r from-blue-600 to-indigo-700 text-white"
+                : "bg-transparent text-slate-600"
             }`}
           >
             Custom ID
           </button>
         </div>
 
-        {/* Email / Custom ID */}
-        <div className="flex items-center gap-2 border rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-500">
-          {useEmail ? <Mail size={18} /> : <User size={18} />}
+        <div className="premium-input flex items-center gap-2 px-3">
+          {useEmail ? (
+            <Mail size={18} className="text-slate-500" />
+          ) : (
+            <User size={18} className="text-slate-500" />
+          )}
           <input
             type="text"
             name={useEmail ? "email" : "customId"}
             placeholder={useEmail ? "Enter Email" : "Enter Custom ID"}
             value={useEmail ? form.email : form.customId}
             onChange={handleChange}
-            className="w-full p-2 outline-none bg-transparent"
+            className="w-full bg-transparent p-2.5 text-sm outline-none"
             required
           />
         </div>
 
-        {/* Password */}
-        <div className="flex items-center gap-2 border rounded-xl px-3 focus-within:ring-2 focus-within:ring-blue-500">
-          <Lock size={18} />
+        <div className="premium-input flex items-center gap-2 px-3">
+          <Lock size={18} className="text-slate-500" />
           <input
             type={showPassword ? "text" : "password"}
             name="password"
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
-            className="w-full p-2 outline-none bg-transparent"
+            className="w-full bg-transparent p-2.5 text-sm outline-none"
             required
           />
           <button
             type="button"
             onClick={() => setShowPassword((prev) => !prev)}
-            className="text-gray-500 hover:text-gray-700"
+            className="text-slate-500 hover:text-slate-700"
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
           </button>
         </div>
 
-        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold shadow-md hover:shadow-lg hover:scale-[1.02] transition"
+          className="premium-button premium-button-primary w-full py-3"
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {/* Footer */}
-        <p className="text-center text-sm text-gray-500">
+        <p className="text-center text-sm text-slate-500">
           Don’t have an account?{" "}
           <span
             onClick={() => navigate("/register")}
-            className="text-blue-600 cursor-pointer hover:underline"
+            className="cursor-pointer font-semibold text-blue-700 hover:underline"
           >
             Sign Up
           </span>

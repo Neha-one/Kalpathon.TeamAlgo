@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { User, LogIn, LogOut, Filter, Menu, X } from "lucide-react";
+import {
+  LogOut,
+  Filter,
+  Menu,
+  X,
+  BriefcaseBusiness,
+  Bell,
+  Info,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 
@@ -28,103 +36,80 @@ const Navbar = () => {
 
   return (
     <>
-      {/* 🔥 NAVBAR */}
-      <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          {/* LEFT */}
-          <div className="flex items-center gap-3">
-            {/* 🔥 HAMBURGER (ALL DEVICES) */}
+      <nav className="sticky top-0 z-50 border-b border-white/70 bg-white/72 backdrop-blur-xl">
+        <div className="premium-shell flex items-center justify-between gap-3 py-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <button
               onClick={() => setMenuOpen(true)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition"
+              className="h-10 w-10 rounded-xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
+              aria-label="Open menu"
             >
-              <Menu size={22} />
+              <Menu size={20} className="mx-auto" />
             </button>
 
-            {/* Logo */}
-            <Link
-              to="/"
-              className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"
-            >
-              WorkerHub
+            <Link to="/" className="flex items-center gap-2">
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-linear-to-br from-blue-600 to-indigo-700 text-white shadow-lg shadow-blue-500/30">
+                <BriefcaseBusiness size={18} />
+              </span>
+              <span className="text-lg font-extrabold tracking-tight text-slate-900 md:text-xl">
+                WorkerHub Pro
+              </span>
             </Link>
           </div>
 
-          {/* CENTER (Desktop Filter) */}
-          <div className="hidden md:flex items-center">
-            <div className="group flex items-center gap-3 bg-white/90 border border-blue-100 px-4 py-2 rounded-full shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-200">
-              <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                <Filter size={14} />
-              </div>
-              <div className="relative">
-                <select
-                  className="appearance-none bg-transparent pr-7 text-sm font-medium text-gray-700 outline-none focus:text-blue-700"
-                  value={selectedSpecialization}
-                  onChange={(e) => setSelectedSpecialization(e.target.value)}
-                >
-                  <option value="all">All Workers</option>
-                  <option value="plumbers">Plumber</option>
-                  <option value="electricians">Electrician</option>
-                  <option value="tutors">Tutors</option>
-                  <option value="delivery agents">Delivery Agents</option>
-                </select>
-                <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-blue-500">
-                  ▾
-                </span>
-              </div>
-            </div>
+          <div className="hidden md:flex items-center rounded-2xl border border-blue-100 bg-white/85 px-3 py-2 shadow-sm">
+            <Filter size={15} className="mr-2 text-blue-600" />
+            <select
+              className="appearance-none bg-transparent pr-2 text-sm font-semibold text-slate-700 outline-none"
+              value={selectedSpecialization}
+              onChange={(e) => setSelectedSpecialization(e.target.value)}
+            >
+              <option value="all">All Workers</option>
+              <option value="plumbers">Plumber</option>
+              <option value="electricians">Electrician</option>
+              <option value="tutors">Tutors</option>
+              <option value="delivery agents">Delivery Agents</option>
+            </select>
           </div>
 
-          {/* RIGHT */}
           <div className="flex items-center gap-2">
-            {/* Mobile Filter */}
-            <div className="md:hidden group flex items-center gap-2 bg-white/90 border border-blue-100 px-2.5 py-1.5 rounded-full shadow-sm hover:border-blue-200 transition-all duration-200">
-              <div className="w-5 h-5 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                <Filter size={12} />
-              </div>
-              <div className="relative">
-                <select
-                  className="appearance-none bg-transparent pr-5 text-xs font-medium text-gray-700 outline-none"
-                  value={selectedSpecialization}
-                  onChange={(e) => setSelectedSpecialization(e.target.value)}
-                >
-                  <option value="all">All</option>
-                  <option value="plumbers">Plumber</option>
-                  <option value="electricians">Electrician</option>
-                  <option value="tutors">Tutors</option>
-                  <option value="delivery agents">Delivery</option>
-                </select>
-                <span className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 text-gray-400">
-                  ▾
-                </span>
-              </div>
+            <div className="md:hidden flex items-center rounded-xl border border-blue-100 bg-white/85 px-2 py-1.5 shadow-sm">
+              <Filter size={14} className="mr-1.5 text-blue-600" />
+              <select
+                className="max-w-25 appearance-none bg-transparent text-xs font-semibold text-slate-700 outline-none"
+                value={selectedSpecialization}
+                onChange={(e) => setSelectedSpecialization(e.target.value)}
+              >
+                <option value="all">All</option>
+                <option value="plumbers">Plumber</option>
+                <option value="electricians">Electrician</option>
+                <option value="tutors">Tutors</option>
+                <option value="delivery agents">Delivery</option>
+              </select>
             </div>
 
-            {/* Auth */}
             {!isLoading && isAuthenticated ? (
               <div className="relative">
-                {/* Avatar */}
                 <button
                   onClick={() => setProfileMenuOpen(!profileMenuOpen)}
-                  className="flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full hover:bg-gray-200 transition"
+                  className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-slate-800 shadow-sm transition hover:border-blue-200"
                 >
-                  <div className="w-7 h-7 flex items-center justify-center bg-blue-600 text-white rounded-full text-xs font-bold">
+                  <div className="grid h-8 w-8 place-items-center rounded-lg bg-linear-to-br from-blue-600 to-indigo-700 text-xs font-bold text-white">
                     {user?.username?.charAt(0).toUpperCase()}
                   </div>
-
-                  <span className="hidden md:block text-sm font-medium">
+                  <span className="hidden max-w-24 truncate text-sm font-semibold md:block">
                     {user?.username}
                   </span>
                 </button>
 
-                {/* Dropdown */}
                 {profileMenuOpen && (
-                  <div className="absolute right-0 mt-2 bg-white border rounded-xl shadow-lg p-3 w-[150px]">
-                    <p className="text-center text-sm mb-2">{user?.username}</p>
-
+                  <div className="absolute right-0 mt-2 w-44 rounded-xl border border-slate-100 bg-white p-3 shadow-xl">
+                    <p className="mb-3 truncate text-center text-sm font-semibold text-slate-800">
+                      {user?.username}
+                    </p>
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center justify-center gap-2 bg-red-500 text-white py-2 rounded-lg text-sm hover:bg-red-600 transition"
+                      className="premium-button w-full flex items-center justify-center gap-2 rounded-lg bg-red-500 py-2 text-sm font-semibold text-white hover:bg-red-600"
                     >
                       <LogOut size={14} />
                       Logout
@@ -136,14 +121,14 @@ const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="text-sm text-gray-700 hover:text-blue-600"
+                  className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 transition hover:text-blue-700"
                 >
                   Sign In
                 </Link>
 
                 <Link
                   to="/register"
-                  className="hidden md:block px-4 py-2 bg-blue-600 text-white rounded-full text-sm hover:bg-blue-700"
+                  className="premium-button premium-button-primary hidden rounded-lg px-4 py-2 text-sm md:block"
                 >
                   Get Started
                 </Link>
@@ -153,66 +138,60 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* 🔥 SIDEBAR (ALL DEVICES) */}
       <div
         className={`fixed inset-0 z-50 transition ${
           menuOpen ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        {/* Overlay */}
         <div
-          className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+          className="absolute inset-0 bg-slate-950/35 backdrop-blur-[2px]"
           onClick={() => setMenuOpen(false)}
         />
 
-        {/* Drawer */}
         <div
-          className={`absolute left-0 top-0 h-full w-[260px] bg-white shadow-xl transition-transform duration-300 ${
+          className={`absolute left-0 top-0 h-full w-70 border-r border-white/50 bg-white/92 p-6 shadow-2xl backdrop-blur-xl transition-transform duration-300 ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <div className="p-6 flex flex-col gap-6">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-              <h2 className="text-lg font-semibold">Menu</h2>
-              <button onClick={() => setMenuOpen(false)}>
-                <X size={22} />
-              </button>
-            </div>
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-bold text-slate-900">Navigation</h2>
+            <button
+              onClick={() => setMenuOpen(false)}
+              className="grid h-9 w-9 place-items-center rounded-lg border border-slate-200 text-slate-700 hover:border-blue-200 hover:text-blue-700"
+              aria-label="Close menu"
+            >
+              <X size={18} />
+            </button>
+          </div>
 
-            {/* Links */}
+          <div className="mt-6 space-y-2">
             <Link
               to="/about"
               onClick={() => setMenuOpen(false)}
-              className="text-base font-medium hover:text-blue-600 transition"
+              className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
             >
-              About
+              <Info size={16} /> About
             </Link>
 
             <Link
               to="/notice"
               onClick={() => setMenuOpen(false)}
-              className="text-base font-medium hover:text-blue-600 transition"
+              className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-slate-700 transition hover:bg-blue-50 hover:text-blue-700"
             >
-              Notice
+              <Bell size={16} /> Notice
             </Link>
-
-            {/* Divider */}
-            <div className="border-t pt-4" />
-
-            {/* User Info */}
-            {isAuthenticated && (
-              <div className="flex items-center gap-3 bg-gray-100 p-3 rounded-xl">
-                <div className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-full font-bold">
-                  {user?.username?.charAt(0)}
-                </div>
-                <div>
-                  <p className="text-sm text-gray-500">Logged in as</p>
-                  <p className="font-medium">{user?.username}</p>
-                </div>
-              </div>
-            )}
           </div>
+
+          {isAuthenticated && (
+            <div className="mt-8 premium-card p-4">
+              <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Logged in as
+              </p>
+              <p className="mt-1 truncate text-sm font-bold text-slate-900">
+                {user?.username}
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>

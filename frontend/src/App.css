@@ -1,1 +1,149 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
 @import "tailwindcss";
+
+:root {
+	--bg-main: #f3f6ff;
+	--bg-accent: #e7f0ff;
+	--surface: rgba(255, 255, 255, 0.82);
+	--surface-strong: rgba(255, 255, 255, 0.95);
+	--text-main: #172033;
+	--text-soft: #5f6780;
+	--brand: #185bff;
+	--brand-strong: #003ed0;
+	--brand-muted: #e8f0ff;
+	--ring: rgba(24, 91, 255, 0.22);
+	--danger: #d23b4d;
+	--shadow-lg: 0 18px 50px rgba(31, 47, 90, 0.14);
+	--shadow-md: 0 8px 24px rgba(29, 44, 85, 0.1);
+	--border-soft: rgba(24, 91, 255, 0.1);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+	min-height: 100%;
+}
+
+body {
+	margin: 0;
+	color: var(--text-main);
+	font-family: "Manrope", sans-serif;
+	background:
+		radial-gradient(1000px 500px at -5% -10%, #dce8ff 0%, transparent 65%),
+		radial-gradient(900px 400px at 105% 0%, #d4f0ff 0%, transparent 55%),
+		linear-gradient(165deg, var(--bg-main) 0%, var(--bg-accent) 100%);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: "Plus Jakarta Sans", sans-serif;
+	letter-spacing: -0.02em;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.premium-page {
+	min-height: 100vh;
+	position: relative;
+}
+
+.premium-shell {
+	width: min(1160px, calc(100% - 2rem));
+	margin-inline: auto;
+}
+
+.premium-card {
+	background: var(--surface);
+	border: 1px solid var(--border-soft);
+	border-radius: 1.25rem;
+	box-shadow: var(--shadow-md);
+	backdrop-filter: blur(10px);
+}
+
+.premium-card-strong {
+	background: var(--surface-strong);
+	border: 1px solid rgba(255, 255, 255, 0.85);
+	box-shadow: var(--shadow-lg);
+	border-radius: 1.25rem;
+}
+
+.premium-section-title {
+	font-size: clamp(1.8rem, 1.4rem + 1.7vw, 2.8rem);
+	font-weight: 800;
+	line-height: 1.1;
+	color: var(--text-main);
+}
+
+.premium-subtitle {
+	color: var(--text-soft);
+	font-size: 0.96rem;
+}
+
+.premium-input {
+	width: 100%;
+	border: 1px solid rgba(23, 32, 51, 0.12);
+	border-radius: 0.9rem;
+	background: rgba(255, 255, 255, 0.92);
+	color: var(--text-main);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.premium-input:focus {
+	outline: none;
+	border-color: rgba(24, 91, 255, 0.45);
+	box-shadow: 0 0 0 4px var(--ring);
+}
+
+.premium-button {
+	border: 0;
+	border-radius: 0.9rem;
+	font-weight: 700;
+	transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.premium-button:hover {
+	transform: translateY(-1px);
+}
+
+.premium-button:disabled {
+	transform: none;
+	opacity: 0.65;
+	cursor: not-allowed;
+}
+
+.premium-button-primary {
+	background: linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
+	color: #fff;
+	box-shadow: 0 12px 24px rgba(24, 91, 255, 0.28);
+}
+
+.premium-button-soft {
+	background: var(--brand-muted);
+	color: var(--brand-strong);
+}
+
+.fade-slide {
+	animation: fadeSlide 0.5s ease both;
+}
+
+@keyframes fadeSlide {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
